@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.tat.rest</groupId>
+	<artifactId>rest-api</artifactId>
+	<packaging>pom</packaging>
+	<version>1.0-SNAPSHOT</version>
+	<name>REST API Maven Webapp</name>
+	<url>http://maven.apache.org</url>
+	<properties>
+		<app-version>1.0-SNAPSHOT</app-version>
+		<jackson-mapper-asl.version>1.9.9</jackson-mapper-asl.version>
+		<jaxb-api.version>2.2.7</jaxb-api.version>
+		<spring-version>3.2.0.RELEASE</spring-version>
+		<cglib-version>2.2</cglib-version>
+		<antlr-version>2.7.6</antlr-version>
+		<commons-collections-version>3.1</commons-collections-version>
+		<dom4j-version>1.6.1</dom4j-version>
+		<javassist-version>3.4.GA</javassist-version>
+		<jta-version>1.1</jta-version>
+		<slf4j-version>1.6.0</slf4j-version>
+		<apache.commons.pool-version>1.4</apache.commons.pool-version>
+		<commons-dbcp-version>1.2.2</commons-dbcp-version>
+		<servlet-api-version>2.5</servlet-api-version>
+		<tomcat-location>C:\softwares\apache-tomcat-7.0.67\webapps</tomcat-location>
+		<oracleJdbcBundleVersion>11.2.0</oracleJdbcBundleVersion>
+		<hibernate-validator-version>5.0.1.Final</hibernate-validator-version>
+		<javax.validation-version>1.1.0.Final</javax.validation-version>
+		<spring.security.version>3.1.4.RELEASE</spring.security.version>
+		<jdk.version>1.7</jdk.version>
+		<quartz.version>1.8.6</quartz.version>
+		<activemq.version>5.2.0</activemq.version>
+		<redis.clients.version>2.0.0</redis.clients.version>
+		<spring.data.redis>1.0.0.RELEASE</spring.data.redis>
+	</properties>
+
+
+	<modules>
+		<module>library</module>
+	</modules>
+
+	<developers>
+		<developer>
+			<id>1</id>
+			<name>Kara Satish Kumar</name>
+			<email>karasatishkumar@gmail.com</email>
+		</developer>
+	</developers>
+
+</project>
