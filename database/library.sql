@@ -1,7 +1,8 @@
-CREATE TABLE `shelf` (
-  `id` int(11) NOT NULL,
-  `location` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+CREATE TABLE `resource_mapping` (
+  `resourceId` int(11) NOT NULL DEFAULT '0',
+  `ownerId` int(11) NOT NULL DEFAULT '0',
+  `ownerType` varchar(20) NOT NULL DEFAULT '',
+  PRIMARY KEY (`resourceId`,`ownerType`,`ownerId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `address` (
@@ -34,11 +35,10 @@ CREATE TABLE `resource` (
   `type` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE `resource_mapping` (
-  `resourceId` int(11) NOT NULL DEFAULT '0',
-  `ownerId` int(11) NOT NULL DEFAULT '0',
-  `ownerType` varchar(20) NOT NULL DEFAULT '',
-  PRIMARY KEY (`resourceId`,`ownerType`,`ownerId`)
+CREATE TABLE `shelf` (
+  `id` int(11) NOT NULL,
+  `location` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `user` (
