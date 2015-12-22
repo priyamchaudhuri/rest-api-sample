@@ -1,8 +1,7 @@
-package com.test.init;
+package org.tat.api.library.init;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
-
-import com.test.config.AppConfig;
+import org.tat.api.library.configuration.AppConfig;
 
 public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer{
 
