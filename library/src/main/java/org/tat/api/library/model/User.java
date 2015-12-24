@@ -2,32 +2,47 @@ package org.tat.api.library.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
  
 @Entity
 @Table(name="USER")
-public class User {
+@Inheritance(strategy=InheritanceType.JOINED)
+@JsonInclude(Include.NON_NULL)
+public abstract class User {
  
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
- 
-    @Column(name = "USERID", nullable = false)
-    private int userId;
     
+    @JsonIgnore
+    @OneToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="addressId")
+    private Address address;
+ 
+
     @Column(name = "FNAME", nullable = false)
     private String fname;
     
     @Column(name = "LNAME", nullable = false)
     private String lname;
 
-    @Column(name = "JOINDATE", nullable = false)
+    @Column(name = "JOININGDATE", nullable = false)
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
     private LocalDate joiningDate;
  
@@ -67,14 +82,6 @@ public class User {
 		this.id = id;
 	}
 
-	public int getUserId() {
-		return userId;
-	}
-
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
-
 	public String getFname() {
 		return fname;
 	}
@@ -101,8 +108,16 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", userId=" + userId + ", fname=" + fname
+		return "User [id=" + id + ", fname=" + fname
 				+ ", lname=" + lname + ", joiningDate=" + joiningDate + "]";
 	}
  
+
+    public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
 }
