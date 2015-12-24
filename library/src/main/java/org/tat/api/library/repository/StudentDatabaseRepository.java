@@ -8,7 +8,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.tat.api.library.model.Student;
 
-@Repository("userRepository")
+@Repository("StudentRepository")
 public class StudentDatabaseRepository extends AbstractRepository implements
 		StudentRepository {
 
@@ -18,7 +18,7 @@ public class StudentDatabaseRepository extends AbstractRepository implements
 
 	@SuppressWarnings("unchecked")
 	public List<Student> getStudents() {
-		Criteria criteria = getSession().createCriteria(Student.class);
+		Criteria criteria = getSession().createCriteria(Student.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		return (List<Student>) criteria.list();
 	}
 
