@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @Entity  
-@Table(name="STUDENT") 
+@Table(name="EMPLOYEE") 
 @PrimaryKeyJoinColumn(name="ID") 
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)  
 @DiscriminatorColumn(name="type",discriminatorType=DiscriminatorType.STRING)  

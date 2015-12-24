@@ -9,20 +9,21 @@ CREATE TABLE `address` (
   PRIMARY KEY (`addressId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE `rack` (
-  `id` int(11) NOT NULL,
-  `number` int(11) DEFAULT NULL,
-  `shelfId` int(11) DEFAULT NULL,
-  KEY `shelfId` (`shelfId`),
-  CONSTRAINT `shelfId` FOREIGN KEY (`shelfId`) REFERENCES `shelf` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 CREATE TABLE `employee` (
   `id` int(11) NOT NULL,
   `type` varchar(20) DEFAULT NULL,
   `empId` int(11) DEFAULT NULL,
   KEY `id` (`id`),
   CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `rack` (
+  `rackId` int(11) NOT NULL,
+  `number` int(11) DEFAULT NULL,
+  `shelfId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`rackId`),
+  KEY `shelfId` (`shelfId`),
+  CONSTRAINT `shelfId` FOREIGN KEY (`shelfId`) REFERENCES `shelf` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `resource` (
@@ -37,9 +38,13 @@ CREATE TABLE `resource` (
 
 CREATE TABLE `resource_mapping` (
   `resourceId` int(11) NOT NULL DEFAULT '0',
-  `ownerId` int(11) NOT NULL DEFAULT '0',
-  `ownerType` varchar(20) NOT NULL DEFAULT '',
-  PRIMARY KEY (`resourceId`,`ownerType`,`ownerId`)
+  `userId` int(11) DEFAULT NULL,
+  `rackId` int(20) DEFAULT NULL,
+  PRIMARY KEY (`resourceId`),
+  KEY `fk_userId` (`userId`),
+  KEY `fk_rackId` (`rackId`),
+  CONSTRAINT `fk_rackId` FOREIGN KEY (`rackId`) REFERENCES `rack` (`rackId`),
+  CONSTRAINT `fk_userId` FOREIGN KEY (`userId`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `shelf` (
