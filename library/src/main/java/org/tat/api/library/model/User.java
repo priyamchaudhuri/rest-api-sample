@@ -1,5 +1,7 @@
 package org.tat.api.library.model;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -18,62 +23,74 @@ import org.joda.time.LocalDate;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
- 
+
 @Entity
-@Table(name="USER")
-@Inheritance(strategy=InheritanceType.JOINED)
+@Table(name = "USER")
+@Inheritance(strategy = InheritanceType.JOINED)
 @JsonInclude(Include.NON_NULL)
-public abstract class User {
- 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    
-    @JsonIgnore
-    @OneToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="addressId")
-    private Address address;
- 
+public abstract class User implements Owner {
 
-    @Column(name = "FNAME", nullable = false)
-    private String fname;
-    
-    @Column(name = "LNAME", nullable = false)
-    private String lname;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
 
-    @Column(name = "JOININGDATE", nullable = false)
-    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-    private LocalDate joiningDate;
- 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + id;
-        result = prime * result + ((fname == null) ? 0 : fname.hashCode());
-        return result;
-    }
- 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (!(obj instanceof User))
-            return false;
-        User other = (User) obj;
-        if (id != other.id)
-            return false;
-        if (fname == null) {
-            if (other.fname != null)
-                return false;
-        } else if (!fname.equals(other.fname))
-            return false;
-        return true;
-    }
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "addressId")
+	private Address address;
 
+	@Column(name = "FNAME", nullable = false)
+	private String fname;
+
+	@Column(name = "LNAME", nullable = false)
+	private String lname;
+
+	@Column(name = "JOININGDATE", nullable = false)
+	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+	private LocalDate joiningDate;
+
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "Resource_Mapping", joinColumns = { @JoinColumn(name = "userId")}, inverseJoinColumns = { @JoinColumn(name = "resourceId") })
+	@JsonManagedReference
+	private Set<Resource> resource;
+
+	public Set<Resource> getResource() {
+		return resource;
+	}
+
+	public void setResource(Set<Resource> resource) {
+		this.resource = resource;
+	}
+
+/*	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		result = prime * result + ((fname == null) ? 0 : fname.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof User))
+			return false;
+		User other = (User) obj;
+		if (id != other.id)
+			return false;
+		if (fname == null) {
+			if (other.fname != null)
+				return false;
+		} else if (!fname.equals(other.fname))
+			return false;
+		return true;
+	}
+*/
 	public int getId() {
 		return id;
 	}
@@ -108,12 +125,11 @@ public abstract class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", fname=" + fname
-				+ ", lname=" + lname + ", joiningDate=" + joiningDate + "]";
+		return "User [id=" + id + ", fname=" + fname + ", lname=" + lname
+				+ ", joiningDate=" + joiningDate + "]";
 	}
- 
 
-    public Address getAddress() {
+	public Address getAddress() {
 		return address;
 	}
 
