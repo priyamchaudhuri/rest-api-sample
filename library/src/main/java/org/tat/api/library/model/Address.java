@@ -18,10 +18,6 @@ public class Address {
 	@Id
 	@JsonIgnore
     private String addressId;
-    
-
-
-
 
 	@Column(name = "ADDRESSLINE1", nullable = false)
     private String addressLine1;
