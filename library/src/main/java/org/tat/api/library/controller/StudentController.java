@@ -7,21 +7,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.tat.api.library.model.User;
-import org.tat.api.library.service.UserService;
+import org.tat.api.library.model.Student;
+import org.tat.api.library.service.StudentService;
 
 @RestController
-@RequestMapping("/users")
-public class UserController {
+@RequestMapping("/students")
+public class StudentController {
 
 	@Autowired
-	UserService service;
+	StudentService service;
 
 	@RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json", produces = { "application/json" })
 	@ResponseBody
-	public List<User> getUsers() {
+	public List<Student> getStudents() {
 
-		List<User> users = service.getUsers();
-		return users;
+		List<Student> Students = service.getStudents();
+		return Students;
 	}
 }
