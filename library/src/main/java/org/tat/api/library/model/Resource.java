@@ -114,12 +114,4 @@ public class Resource {
 		this.rack = rack;
 	}
 
-	@Override
-	public String toString() {
-		return "Resource [id=" + id + ", name=" + name + ", author=" + author
-				+ ", publication=" + publication + ", year=" + year + ", type="
-				+ type + ", user=" + user + ", rack=" + rack + "]";
-	}
-	
-	
 }

@@ -114,11 +114,4 @@ public abstract class User implements Owner {
 		this.address = address;
 	}
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", address=" + address + ", fname=" + fname
-				+ ", lname=" + lname + ", joiningDate=" + joiningDate
-				+ ", resources=" + resources + "]";
-	}
-	
 }

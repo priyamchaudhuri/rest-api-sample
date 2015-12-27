@@ -94,12 +94,4 @@ public class Address {
 		this.addressId = addressId;
 	}
 
-	@Override
-	public String toString() {
-		return "Address [addressId=" + addressId + ", addressLine1="
-				+ addressLine1 + ", addressLine2=" + addressLine2
-				+ ", addressLine3=" + addressLine3 + ", city=" + city
-				+ ", state=" + state + ", country=" + country + "]";
-	}
-
 }
