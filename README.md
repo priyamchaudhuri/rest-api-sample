@@ -28,6 +28,11 @@ One successfull built the project, you can start tomcat to test..
 ## Contributing
 Pull requests are welcome. Expecting some android and i-os developer to contribute to this.
 
+### Database Dump
+
+		mysqldump -u root -p library > library.sql
+		mysqldump -u root -p library < library.sql
+
 ## Staying in touch
 
 ## License

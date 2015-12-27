@@ -1,8 +1,8 @@
 package org.tat.api.library.model;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -12,15 +12,15 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-@Entity  
-@Table(name="EMPLOYEE") 
-@PrimaryKeyJoinColumn(name="ID") 
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)  
-@DiscriminatorColumn(name="type",discriminatorType=DiscriminatorType.STRING)  
-@DiscriminatorValue(value="employee")  
+@Entity
+@Table(name = "EMPLOYEE")
+@PrimaryKeyJoinColumn(name = "EMP_USER_ID")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
 @JsonInclude(Include.NON_NULL)
-public abstract class Employee extends User {
+public class Employee extends User {
 
+	@Column(name = "EMP_ID")
 	private Long empId;
 
 	public Long getEmpId() {
@@ -31,5 +31,9 @@ public abstract class Employee extends User {
 		this.empId = empId;
 	}
 
-	
+	@Override
+	public String toString() {
+		return "Employee [empId=" + empId + "]";
+	}
+
 }
