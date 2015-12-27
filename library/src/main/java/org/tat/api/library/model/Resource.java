@@ -12,14 +12,17 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @Entity
 @Table(name = "RESOURCE")
+@JsonInclude(Include.NON_NULL)
 public class Resource {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "ID")
+	@Column(name = "RESOURCE_ID")
 	private int id;
 
 	@Column(name = "NAME")
@@ -31,26 +34,21 @@ public class Resource {
 	@Column(name = "PUBLICATION")
 	private String publication;
 
-	@Column(name = "year")
+	@Column(name = "YEAR")
 	private int year;
 
-	@Column(name = "type")
+	@Column(name = "TYPE")
 	private String type;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinTable(name = "Resource_Mapping", joinColumns = { @JoinColumn(name = "resourceId") }, inverseJoinColumns = { @JoinColumn(name = "userId") })
+	@JoinTable(name = "RESOURCE_USER", joinColumns = { @JoinColumn(name = "RU_RESOURCE_ID") }, inverseJoinColumns = { @JoinColumn(name = "RU_USER_ID") })
 	@JsonBackReference
 	private User user;
 
-	
-	  @ManyToOne(optional=true)
-	  
-	  @JoinTable(name = "Resource_Mapping", joinColumns = {
-	  @JoinColumn(name="resourceId") }, inverseJoinColumns = {
-	  @JoinColumn(name="rackId") } )
-	  @JsonBackReference
-	  private Rack rack;
-	 
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinTable(name = "RESOURCE_RACK", joinColumns = { @JoinColumn(name = "RR_RESOURCE_ID") }, inverseJoinColumns = { @JoinColumn(name = "RR_RACK_ID") })
+	@JsonBackReference
+	private Rack rack;
 
 	public int getId() {
 		return id;
@@ -108,10 +106,20 @@ public class Resource {
 		this.user = user;
 	}
 
-	/*
-	 * public Rack getRack() { return rack; }
-	 * 
-	 * public void setRack(Rack rack) { this.rack = rack; }
-	 */
+	public Rack getRack() {
+		return rack;
+	}
 
+	public void setRack(Rack rack) {
+		this.rack = rack;
+	}
+
+	@Override
+	public String toString() {
+		return "Resource [id=" + id + ", name=" + name + ", author=" + author
+				+ ", publication=" + publication + ", year=" + year + ", type="
+				+ type + ", user=" + user + ", rack=" + rack + "]";
+	}
+	
+	
 }

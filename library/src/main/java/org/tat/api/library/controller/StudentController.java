@@ -21,7 +21,8 @@ public class StudentController {
 	@ResponseBody
 	public List<Student> getStudents() {
 
-		List<Student> Students = service.getStudents();
-		return Students;
+		List<Student> students = service.getStudents();
+		System.out.println(students);
+		return students;
 	}
 }

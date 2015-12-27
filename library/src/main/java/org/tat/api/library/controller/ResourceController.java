@@ -22,7 +22,8 @@ public class ResourceController {
 	@ResponseBody
 	public List<Resource> getResource() {
 
-		List<Resource> resource = service.getResources();
-		return resource;
+		List<Resource> resources = service.getResources();
+		System.out.println(resources);
+		return resources;
 	}
 }

@@ -12,7 +12,6 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -24,7 +23,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Entity
 @Table(name = "USER")
@@ -34,63 +32,48 @@ public abstract class User implements Owner {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "USER_ID")
 	private int id;
 
 	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "addressId")
+	@JoinColumn(name = "USER_ADDRESS_ID")
 	private Address address;
 
-	@Column(name = "FNAME", nullable = false)
+	@Column(name = "FIRST_NAME", nullable = false)
 	private String fname;
 
-	@Column(name = "LNAME", nullable = false)
+	@Column(name = "LAST_NAME", nullable = false)
 	private String lname;
 
-	@Column(name = "JOININGDATE", nullable = false)
+	@Column(name = "JOINING_DATE", nullable = false)
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+	@JsonIgnore
 	private LocalDate joiningDate;
 
 	@OneToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "Resource_Mapping", joinColumns = { @JoinColumn(name = "userId")}, inverseJoinColumns = { @JoinColumn(name = "resourceId") })
+	@JoinTable(name = "RESOURCE_USER", joinColumns = { @JoinColumn(name = "RU_USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "RU_RESOURCE_ID") })
 	@JsonManagedReference
-	private Set<Resource> resource;
+	private Set<Resource> resources;
 
-	public Set<Resource> getResource() {
-		return resource;
+	public Set<Resource> getResources() {
+		return resources;
 	}
 
-	public void setResource(Set<Resource> resource) {
-		this.resource = resource;
+	public void setResources(Set<Resource> resources) {
+		this.resources = resources;
 	}
 
-/*	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + id;
-		result = prime * result + ((fname == null) ? 0 : fname.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (!(obj instanceof User))
-			return false;
-		User other = (User) obj;
-		if (id != other.id)
-			return false;
-		if (fname == null) {
-			if (other.fname != null)
-				return false;
-		} else if (!fname.equals(other.fname))
-			return false;
-		return true;
-	}
-*/
+	/*
+	 * @Override public int hashCode() { final int prime = 31; int result = 1;
+	 * result = prime * result + id; result = prime * result + ((fname == null)
+	 * ? 0 : fname.hashCode()); return result; }
+	 * 
+	 * @Override public boolean equals(Object obj) { if (this == obj) return
+	 * true; if (obj == null) return false; if (!(obj instanceof User)) return
+	 * false; User other = (User) obj; if (id != other.id) return false; if
+	 * (fname == null) { if (other.fname != null) return false; } else if
+	 * (!fname.equals(other.fname)) return false; return true; }
+	 */
 	public int getId() {
 		return id;
 	}
@@ -123,12 +106,6 @@ public abstract class User implements Owner {
 		this.joiningDate = joiningDate;
 	}
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", fname=" + fname + ", lname=" + lname
-				+ ", joiningDate=" + joiningDate + "]";
-	}
-
 	public Address getAddress() {
 		return address;
 	}
@@ -136,4 +113,12 @@ public abstract class User implements Owner {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", address=" + address + ", fname=" + fname
+				+ ", lname=" + lname + ", joiningDate=" + joiningDate
+				+ ", resources=" + resources + "]";
+	}
+	
 }

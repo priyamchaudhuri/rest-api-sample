@@ -1,12 +1,10 @@
 package org.tat.api.library.model;
 
 import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.MappedSuperclass;
 
-@Entity  
-@Table(name="EMPLOYEE") 
-@DiscriminatorValue("Librarian") 
+@DiscriminatorValue("LIBRARIAN") 
+@MappedSuperclass
 public class Librarian extends Employee{
 
 }

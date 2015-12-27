@@ -18,7 +18,7 @@ public class ResourceDatabaseRepository extends AbstractRepository implements
 
 	@SuppressWarnings("unchecked")
 	public List<Resource> getResources() {
-		Criteria criteria = getSession().createCriteria(Resource.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		Criteria criteria = getSession().createCriteria(Resource.class);
 		return (List<Resource>) criteria.list();
 	}
 
