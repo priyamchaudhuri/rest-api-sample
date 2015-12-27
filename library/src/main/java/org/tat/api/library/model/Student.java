@@ -21,9 +21,5 @@ public class Student extends User {
 		this.rollNo = rollNo;
 	}
 
-	@Override
-	public String toString() {
-		return "Student [rollNo=" + rollNo + "]";
-	}
 
 }

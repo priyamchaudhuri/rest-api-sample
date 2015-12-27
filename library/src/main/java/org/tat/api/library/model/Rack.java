@@ -31,10 +31,6 @@ public class Rack implements Owner {
 	@Column(name = "NUMBER")
 	private int number;
 
-	/*@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "RACK_SHELF_ID")
-	private Shelf shelf;*/
-
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "RESOURCE_RACK", joinColumns = { @JoinColumn(name = "RR_RACK_ID") }, inverseJoinColumns = { @JoinColumn(name = "RR_RESOURCE_ID") })
 	@JsonManagedReference
@@ -63,27 +59,4 @@ public class Rack implements Owner {
 	public void setNumber(int number) {
 		this.number = number;
 	}
-
-	@Override
-	public String toString() {
-		return "Rack [rackId=" + rackId + ", number=" + number + ", resource="
-				+ resource + "]";
-	}
-
-	/*public Shelf getShelf() {
-		return shelf;
-	}
-
-	public void setShelf(Shelf shelf) {
-		this.shelf = shelf;
-	}*/
-
-	/*@Override
-	public String toString() {
-		return "Rack [rackId=" + rackId + ", number=" + number + ", shelf="
-				+ shelf + ", resource=" + resource + "]";
-	}*/
-	
-	
-	
 }

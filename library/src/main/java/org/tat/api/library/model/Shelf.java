@@ -56,10 +56,4 @@ public class Shelf {
 		this.racks = racks;
 	}
 
-	@Override
-	public String toString() {
-		return "Shelf [id=" + id + ", location=" + location + ", racks="
-				+ racks + "]";
-	}
-
 }
