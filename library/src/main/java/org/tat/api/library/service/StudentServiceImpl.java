@@ -1,11 +1,13 @@
 package org.tat.api.library.service;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.tat.api.library.model.Address;
+import org.tat.api.library.model.Resource;
 import org.tat.api.library.model.Student;
 import org.tat.api.library.repository.StudentRepository;
 
@@ -34,6 +36,10 @@ public class StudentServiceImpl implements StudentService {
 	
 	public Address getStudentAddress(int id) {
 		return dao.getStudentAddress(id);
+	}
+	
+	public Set<Resource> getStudentResources(int id) {
+		return dao.getStudentResources(id);
 	}
 
 	public void updateStudent(Student Student) {

@@ -1,13 +1,18 @@
 package org.tat.api.library.repository;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.Query;
+import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.tat.api.library.model.Address;
+import org.tat.api.library.model.Resource;
 import org.tat.api.library.model.Student;
 
 @Repository("StudentRepository")
@@ -42,6 +47,15 @@ public class StudentDatabaseRepository extends AbstractRepository implements
 		criteria.add(Restrictions.eq("id", id));
 		criteria.setProjection(Projections.property("address"));
 		return (Address) criteria.uniqueResult();
+	}
+	
+	public Set<Resource> getStudentResources(int id) {
+		Criteria criteria = getSession().createCriteria(Resource.class, "resource");
+		criteria.createAlias("resource.user", "student");
+		criteria.add(Restrictions.eq("student.id", id));
+		criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+		Set<Resource> resources = new HashSet<Resource>((List<Resource>)criteria.list());
+		return resources;
 	}
 
 	public void updateStudent(Student student) {
