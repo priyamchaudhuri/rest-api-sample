@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
+import org.tat.api.library.model.Address;
 import org.tat.api.library.model.Student;
 
 @Repository("StudentRepository")
@@ -33,6 +35,13 @@ public class StudentDatabaseRepository extends AbstractRepository implements
 		Criteria criteria = getSession().createCriteria(Student.class);
 		criteria.add(Restrictions.eq("id", id));
 		return (Student) criteria.uniqueResult();
+	}
+	
+	public Address getStudentAddress(int id) {
+		Criteria criteria = getSession().createCriteria(Student.class);
+		criteria.add(Restrictions.eq("id", id));
+		criteria.setProjection(Projections.property("address"));
+		return (Address) criteria.uniqueResult();
 	}
 
 	public void updateStudent(Student student) {
