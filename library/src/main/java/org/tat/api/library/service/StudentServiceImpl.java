@@ -11,6 +11,7 @@ import org.tat.api.library.model.Resource;
 import org.tat.api.library.model.Student;
 import org.tat.api.library.repository.StudentRepository;
 
+
 @Service("StudentService")
 @Transactional
 public class StudentServiceImpl implements StudentService {
@@ -44,6 +45,11 @@ public class StudentServiceImpl implements StudentService {
 
 	public void updateStudent(Student Student) {
 		dao.updateStudent(Student);
+	}
+	
+	public Resource  getStudentResource(int studentId,int resourceId){
+		
+		return dao.getStudentResource(studentId,resourceId);
 	}
 	
 }

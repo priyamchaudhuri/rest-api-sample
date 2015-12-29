@@ -3,6 +3,7 @@ package org.tat.api.library.service;
 import java.util.List;
 
 import org.tat.api.library.model.Resource;
+import org.tat.api.library.model.User;
 
  
 public interface ResourceService {
@@ -16,4 +17,6 @@ public interface ResourceService {
 	Resource getResource(int id);
 
 	void updateResource(Resource Resource);
+	
+	User getResourceUser(int id);
 }

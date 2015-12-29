@@ -43,9 +43,10 @@ public class StudentDatabaseRepository extends AbstractRepository implements
 	}
 	
 	public Address getStudentAddress(int id) {
-		Criteria criteria = getSession().createCriteria(Student.class);
-		criteria.add(Restrictions.eq("id", id));
-		criteria.setProjection(Projections.property("address"));
+		Criteria criteria = getSession().createCriteria(Student.class, "student");
+		criteria.setFetchMode("address", FetchMode.SELECT);
+		criteria.add(Restrictions.eq("student.id", id));
+		criteria.setProjection(Projections.property("student.address"));
 		return (Address) criteria.uniqueResult();
 	}
 	
@@ -58,6 +59,16 @@ public class StudentDatabaseRepository extends AbstractRepository implements
 		return resources;
 	}
 
+	public Resource getStudentResource(int studentId,int resourceId) {
+		Criteria criteria = getSession().createCriteria(Resource.class, "resource");
+		criteria.createAlias("resource.user", "student");
+		criteria.add(Restrictions.eq("student.id", studentId));
+		criteria.add(Restrictions.eq("resource.id", resourceId));
+		criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+		Resource resource = (Resource)criteria.uniqueResult();
+		return resource;
+	}
+	
 	public void updateStudent(Student student) {
 		getSession().update(student);
 	}

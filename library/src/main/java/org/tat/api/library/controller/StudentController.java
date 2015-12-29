@@ -58,4 +58,13 @@ public class StudentController {
 		Set<Resource> resources = service.getStudentResources(studentId);
 		return resources;
 	}
+	
+	@RequestMapping(value = "/{studentId}/resources/{resourceId}", method = RequestMethod.GET, headers = "Accept=application/json", produces = { "application/json" })
+	@ResponseBody
+	public Resource getStudentResource(@PathVariable int studentId,@PathVariable int resourceId,
+			HttpServletRequest request, HttpServletResponse response) {
+
+		Resource resource = service.getStudentResource(studentId,resourceId);
+		return resource;
+	}	
 }
