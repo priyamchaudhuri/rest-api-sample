@@ -17,6 +17,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
 
@@ -39,6 +41,7 @@ public class User implements Owner {
 	@JsonIgnore
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "USER_ADDRESS_ID")
+	@Cascade(CascadeType.ALL)
 	private Address address;
 
 	@Column(name = "FIRST_NAME", nullable = false)
