@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.tat.api.library.model.Resource;
+import org.tat.api.library.model.User;
 
 @Repository("ResourceRepository")
 public class ResourceDatabaseRepository extends AbstractRepository implements
@@ -39,4 +41,14 @@ public class ResourceDatabaseRepository extends AbstractRepository implements
 		getSession().update(Resource);
 	}
 
+	public User getResourceUser(int id) {
+		Criteria criteria = getSession().createCriteria(User.class);
+		criteria.createCriteria("resources").add(Restrictions.eq("id", id));
+		// criteria.createAlias("resource.user", "student");
+		// criteria.add(Restrictions.eq("resource.id", id));
+		criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+		
+		User user = (User) criteria.uniqueResult();
+		return user;
+	}
 }
