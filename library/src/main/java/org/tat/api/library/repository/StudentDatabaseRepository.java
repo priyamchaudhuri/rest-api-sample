@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.Query;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Order;
@@ -28,7 +29,6 @@ public class StudentDatabaseRepository extends AbstractRepository implements
 	@SuppressWarnings("unchecked")
 	public List<Student> getStudents(int offset, int limit, List<Sort> sortConfig) {
 		Criteria criteria = getSession().createCriteria(Student.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-		criteria.setProjection(Projections.distinct(Projections.property("id")));
 		if (sortConfig != null && sortConfig.size() > 0) {
 			for (Sort sort : sortConfig) {
 				if (sort.getSortType().equals(SortType.ASC)) {
@@ -57,9 +57,10 @@ public class StudentDatabaseRepository extends AbstractRepository implements
 	}
 	
 	public Address getStudentAddress(int id) {
-		Criteria criteria = getSession().createCriteria(Student.class);
-		criteria.add(Restrictions.eq("id", id));
-		criteria.setProjection(Projections.property("address"));
+		Criteria criteria = getSession().createCriteria(Student.class, "student");
+		criteria.setFetchMode("address", FetchMode.SELECT);
+		criteria.add(Restrictions.eq("student.id", id));
+		criteria.setProjection(Projections.property("student.address"));
 		return (Address) criteria.uniqueResult();
 	}
 	
@@ -72,6 +73,16 @@ public class StudentDatabaseRepository extends AbstractRepository implements
 		return resources;
 	}
 
+	public Resource getStudentResource(int studentId,int resourceId) {
+		Criteria criteria = getSession().createCriteria(Resource.class, "resource");
+		criteria.createAlias("resource.user", "student");
+		criteria.add(Restrictions.eq("student.id", studentId));
+		criteria.add(Restrictions.eq("resource.id", resourceId));
+		criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+		Resource resource = (Resource)criteria.uniqueResult();
+		return resource;
+	}
+	
 	public void updateStudent(Student student) {
 		getSession().update(student);
 	}

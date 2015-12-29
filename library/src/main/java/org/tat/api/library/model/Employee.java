@@ -15,20 +15,21 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @Entity
 @Table(name = "EMPLOYEE")
 @PrimaryKeyJoinColumn(name = "EMP_USER_ID")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "TYPE", discriminatorType = DiscriminatorType.STRING)
+@Inheritance(strategy = InheritanceType.JOINED)
 @JsonInclude(Include.NON_NULL)
 public class Employee extends User {
 
-	@Column(name = "EMP_ID")
-	private Long empId;
+	@Column(name = "EMP_CODE")
+	private Long empCode;
 
-	public Long getEmpId() {
-		return empId;
+	public Long getEmpCode() {
+		return empCode;
 	}
 
-	public void setEmpId(Long empId) {
-		this.empId = empId;
+	public void setEmpCode(Long empCode) {
+		this.empCode = empCode;
 	}
+
+
 
 }

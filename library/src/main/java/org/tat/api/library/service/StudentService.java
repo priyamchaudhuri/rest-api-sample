@@ -21,6 +21,8 @@ public interface StudentService {
 	Address getStudentAddress(int id);
 	
 	Set<Resource> getStudentResources(int id);
+	
+	Resource getStudentResource(int studentId,int resourceId);
 
 	void updateStudent(Student Student);
 }

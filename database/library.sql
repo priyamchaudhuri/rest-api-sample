@@ -53,8 +53,8 @@ DROP TABLE IF EXISTS `employee`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `employee` (
   `EMP_USER_ID` bigint(11) NOT NULL,
-  `TYPE` varchar(20) DEFAULT NULL,
-  `EMP_ID` bigint(11) DEFAULT NULL,
+  `EMP_CODE` bigint(11) DEFAULT NULL,
+  PRIMARY KEY (`EMP_USER_ID`),
   KEY `FK_EMP_USER_ID` (`EMP_USER_ID`),
   CONSTRAINT `FK_EMP_USER_ID` FOREIGN KEY (`EMP_USER_ID`) REFERENCES `user` (`USER_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -66,8 +66,33 @@ CREATE TABLE `employee` (
 
 LOCK TABLES `employee` WRITE;
 /*!40000 ALTER TABLE `employee` DISABLE KEYS */;
-INSERT INTO `employee` VALUES (2003,'TEACHER',903897),(2004,'LIBRARIAN',903898);
+INSERT INTO `employee` VALUES (2003,855366),(2004,823452);
 /*!40000 ALTER TABLE `employee` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `librarian`
+--
+
+DROP TABLE IF EXISTS `librarian`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `librarian` (
+  `LIBRARIAN_USER_ID` bigint(11) NOT NULL,
+  `FAV_BOOK` varchar(20) NOT NULL,
+  KEY `LIBRARIAN_USER_ID` (`LIBRARIAN_USER_ID`),
+  CONSTRAINT `librarian_ibfk_1` FOREIGN KEY (`LIBRARIAN_USER_ID`) REFERENCES `employee` (`EMP_USER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `librarian`
+--
+
+LOCK TABLES `librarian` WRITE;
+/*!40000 ALTER TABLE `librarian` DISABLE KEYS */;
+INSERT INTO `librarian` VALUES (2003,'JAVA');
+/*!40000 ALTER TABLE `librarian` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -229,6 +254,31 @@ INSERT INTO `student` VALUES (2001,2015001),(2002,2015002);
 UNLOCK TABLES;
 
 --
+-- Table structure for table `teacher`
+--
+
+DROP TABLE IF EXISTS `teacher`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `teacher` (
+  `TEACHER_USR_ID` bigint(11) NOT NULL,
+  `DEPARTMENT` varchar(20) DEFAULT NULL,
+  KEY `TEACHER_USR_ID` (`TEACHER_USR_ID`),
+  CONSTRAINT `teacher_ibfk_1` FOREIGN KEY (`TEACHER_USR_ID`) REFERENCES `employee` (`EMP_USER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `teacher`
+--
+
+LOCK TABLES `teacher` WRITE;
+/*!40000 ALTER TABLE `teacher` DISABLE KEYS */;
+INSERT INTO `teacher` VALUES (2004,'IT');
+/*!40000 ALTER TABLE `teacher` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `user`
 --
 
@@ -266,4 +316,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-12-27 12:44:35
+-- Dump completed on 2015-12-29 18:45:35

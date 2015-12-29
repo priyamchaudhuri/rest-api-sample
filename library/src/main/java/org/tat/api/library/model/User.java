@@ -2,6 +2,7 @@ package org.tat.api.library.model;
 
 import java.util.Set;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -30,14 +31,15 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Table(name = "USER")
 @Inheritance(strategy = InheritanceType.JOINED)
 @JsonInclude(Include.NON_NULL)
-public abstract class User implements Owner {
+public class User implements Owner {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "USER_ID")
 	private int id;
 
-	@OneToOne(fetch = FetchType.EAGER)
+	@JsonIgnore
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "USER_ADDRESS_ID")
 	@Cascade(CascadeType.ALL)
 	private Address address;
@@ -52,8 +54,9 @@ public abstract class User implements Owner {
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
 	@JsonIgnore
 	private LocalDate joiningDate;
-
-	@OneToMany(fetch = FetchType.EAGER)
+	
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "RESOURCE_USER", joinColumns = { @JoinColumn(name = "RU_USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "RU_RESOURCE_ID") })
 	@JsonManagedReference
 	private Set<Resource> resources;

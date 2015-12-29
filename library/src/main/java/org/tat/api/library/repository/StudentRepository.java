@@ -23,4 +23,6 @@ public interface StudentRepository {
 	Set<Resource> getStudentResources(int id);
 
 	void updateStudent(Student user);
+	
+	Resource getStudentResource(int studentId,int resourceId);
 }
