@@ -5,12 +5,14 @@ import java.util.List;
 import java.util.Set;
 
 import org.hibernate.Criteria;
-import org.hibernate.FetchMode;
 import org.hibernate.Query;
 import org.hibernate.criterion.CriteriaSpecification;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
+import org.tat.api.library.controller.Sort;
+import org.tat.api.library.controller.SortType;
 import org.tat.api.library.model.Address;
 import org.tat.api.library.model.Resource;
 import org.tat.api.library.model.Student;
@@ -24,8 +26,20 @@ public class StudentDatabaseRepository extends AbstractRepository implements
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Student> getStudents() {
+	public List<Student> getStudents(int offset, int limit, List<Sort> sortConfig) {
 		Criteria criteria = getSession().createCriteria(Student.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		criteria.setProjection(Projections.distinct(Projections.property("id")));
+		if (sortConfig != null && sortConfig.size() > 0) {
+			for (Sort sort : sortConfig) {
+				if (sort.getSortType().equals(SortType.ASC)) {
+					criteria.addOrder(Order.asc(sort.getField()));
+				} else {
+					criteria.addOrder(Order.desc(sort.getField()));
+				}
+			}
+		}
+		criteria.setFirstResult(offset);
+		criteria.setMaxResults(limit);
 		return (List<Student>) criteria.list();
 	}
 

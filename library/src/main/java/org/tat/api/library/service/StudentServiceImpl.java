@@ -6,6 +6,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.tat.api.library.controller.Sort;
 import org.tat.api.library.model.Address;
 import org.tat.api.library.model.Resource;
 import org.tat.api.library.model.Student;
@@ -22,8 +23,8 @@ public class StudentServiceImpl implements StudentService {
 		dao.saveStudent(Student);
 	}
 
-	public List<Student> getStudents() {
-		return dao.getStudents();
+	public List<Student> getStudents(int offset, int limit, List<Sort> sortConfigs) {
+		return dao.getStudents(offset, limit, sortConfigs);
 	}
 
 	public void deleteStudent(int id) {
