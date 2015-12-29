@@ -30,9 +30,9 @@ Pull requests are welcome. Expecting some android and i-os developer to contribu
 
 ### Database Dump
 
-		#for export
+		--for export
 		mysqldump -u root -p library > library.sql
-		for import
+		--for import
 		source c://library.sql
 
 ## Staying in touch
