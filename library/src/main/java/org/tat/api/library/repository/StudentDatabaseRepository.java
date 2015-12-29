@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.Query;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Order;
@@ -28,7 +29,6 @@ public class StudentDatabaseRepository extends AbstractRepository implements
 	@SuppressWarnings("unchecked")
 	public List<Student> getStudents(int offset, int limit, List<Sort> sortConfig) {
 		Criteria criteria = getSession().createCriteria(Student.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-		criteria.setProjection(Projections.distinct(Projections.property("id")));
 		if (sortConfig != null && sortConfig.size() > 0) {
 			for (Sort sort : sortConfig) {
 				if (sort.getSortType().equals(SortType.ASC)) {
