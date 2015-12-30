@@ -20,8 +20,8 @@ public class StudentServiceImpl implements StudentService {
 	@Autowired
 	private StudentRepository dao;
 
-	public void saveStudent(Student Student) {
-		dao.saveStudent(Student);
+	public Student saveStudent(Student Student) {
+		return dao.saveStudent(Student);
 	}
 
 	public List<Student> getStudents(int offset, int limit, List<Sort> sortConfigs) {

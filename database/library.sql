@@ -23,14 +23,13 @@ DROP TABLE IF EXISTS `address`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `address` (
-  `ADDRESS_ID` bigint(11) NOT NULL,
+  `ADDRESS_ID` bigint(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `ADDRESS_LINE_1` varchar(50) DEFAULT NULL,
   `ADDRESS_LINE_2` varchar(50) DEFAULT NULL,
   `ADDRESS_LINE_3` varchar(50) DEFAULT NULL,
   `CITY` varchar(20) DEFAULT NULL,
   `STATE` varchar(20) DEFAULT NULL,
-  `COUNTRY` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`ADDRESS_ID`)
+  `COUNTRY` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -40,7 +39,7 @@ CREATE TABLE `address` (
 
 LOCK TABLES `address` WRITE;
 /*!40000 ALTER TABLE `address` DISABLE KEYS */;
-INSERT INTO `address` VALUES (1001,'Rajpath Road','Janaki Bhavan','First Floor','Bangalore','Karnataka','India'),(1002,'Rajpath Road','Janaki Bhavan','Second Floor','Bangalore','Karnataka','India'),(1003,'HAL ROAD','Krishna Icon','Flat 202','Bangalore','Karnataka','India'),(1004,'Lajvanti Road','Krishna Icon','Flat 202','Delhi','Delhi','India');
+-- INSERT INTO `address` VALUES (1001,'Rajpath Road','Janaki Bhavan','First Floor','Bangalore','Karnataka','India'),(1002,'Rajpath Road','Janaki Bhavan','Second Floor','Bangalore','Karnataka','India'),(1003,'HAL ROAD','Krishna Icon','Flat 202','Bangalore','Karnataka','India'),(1004,'Lajvanti Road','Krishna Icon','Flat 202','Delhi','Delhi','India');
 /*!40000 ALTER TABLE `address` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -52,9 +51,8 @@ DROP TABLE IF EXISTS `employee`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `employee` (
-  `EMP_USER_ID` bigint(11) NOT NULL,
+  `EMP_USER_ID` bigint(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `EMP_CODE` bigint(11) DEFAULT NULL,
-  PRIMARY KEY (`EMP_USER_ID`),
   KEY `FK_EMP_USER_ID` (`EMP_USER_ID`),
   CONSTRAINT `FK_EMP_USER_ID` FOREIGN KEY (`EMP_USER_ID`) REFERENCES `user` (`USER_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -66,7 +64,7 @@ CREATE TABLE `employee` (
 
 LOCK TABLES `employee` WRITE;
 /*!40000 ALTER TABLE `employee` DISABLE KEYS */;
-INSERT INTO `employee` VALUES (2003,855366),(2004,823452);
+-- INSERT INTO `employee` VALUES (2003,855366),(2004,823452);
 /*!40000 ALTER TABLE `employee` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -91,7 +89,7 @@ CREATE TABLE `librarian` (
 
 LOCK TABLES `librarian` WRITE;
 /*!40000 ALTER TABLE `librarian` DISABLE KEYS */;
-INSERT INTO `librarian` VALUES (2003,'JAVA');
+-- INSERT INTO `librarian` VALUES (2003,'JAVA');
 /*!40000 ALTER TABLE `librarian` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -103,10 +101,9 @@ DROP TABLE IF EXISTS `rack`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `rack` (
-  `RACK_ID` bigint(11) NOT NULL,
+  `RACK_ID` bigint(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `NUMBER` int(11) DEFAULT NULL,
   `RACK_SHELF_ID` bigint(11) DEFAULT NULL,
-  PRIMARY KEY (`RACK_ID`),
   KEY `FK_RACK_SHELF_ID` (`RACK_SHELF_ID`),
   CONSTRAINT `FK_RACK_SHELF_ID` FOREIGN KEY (`RACK_SHELF_ID`) REFERENCES `shelf` (`SHELF_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -118,7 +115,7 @@ CREATE TABLE `rack` (
 
 LOCK TABLES `rack` WRITE;
 /*!40000 ALTER TABLE `rack` DISABLE KEYS */;
-INSERT INTO `rack` VALUES (5001,1,4001),(5002,2,4001),(5003,3,4001),(5004,1,4002),(5005,2,4002),(5006,3,4002);
+-- INSERT INTO `rack` VALUES (5001,1,4001),(5002,2,4001),(5003,3,4001),(5004,1,4002),(5005,2,4002),(5006,3,4002);
 /*!40000 ALTER TABLE `rack` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -130,13 +127,12 @@ DROP TABLE IF EXISTS `resource`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `resource` (
-  `RESOURCE_ID` bigint(11) NOT NULL,
+  `RESOURCE_ID` bigint(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `NAME` varchar(20) DEFAULT NULL,
   `AUTHOR` varchar(20) DEFAULT NULL,
   `PUBLICATION` varchar(20) DEFAULT NULL,
   `YEAR` int(11) DEFAULT NULL,
-  `TYPE` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`RESOURCE_ID`)
+  `TYPE` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -146,7 +142,7 @@ CREATE TABLE `resource` (
 
 LOCK TABLES `resource` WRITE;
 /*!40000 ALTER TABLE `resource` DISABLE KEYS */;
-INSERT INTO `resource` VALUES (3001,'REST','Satish','TAT',2015,'BOOK'),(3002,'Hibernate','Priyam','TAT',2015,'BOOK'),(3003,'Spring MVC','Seema','TAT',2015,'BOOK'),(3004,'Spring Security','Matt','TAT',2015,'BOOK'),(3005,'Spring Security','Matt','TAT',2015,'CD'),(3006,'Spring MVC','Seema','TAT',2015,'CD'),(3007,'Spring JPA','Priyam','TAT',2015,'CD');
+-- INSERT INTO `resource` VALUES (3001,'REST','Satish','TAT',2015,'BOOK'),(3002,'Hibernate','Priyam','TAT',2015,'BOOK'),(3003,'Spring MVC','Seema','TAT',2015,'BOOK'),(3004,'Spring Security','Matt','TAT',2015,'BOOK'),(3005,'Spring Security','Matt','TAT',2015,'CD'),(3006,'Spring MVC','Seema','TAT',2015,'CD'),(3007,'Spring JPA','Priyam','TAT',2015,'CD');
 /*!40000 ALTER TABLE `resource` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -173,7 +169,7 @@ CREATE TABLE `resource_rack` (
 
 LOCK TABLES `resource_rack` WRITE;
 /*!40000 ALTER TABLE `resource_rack` DISABLE KEYS */;
-INSERT INTO `resource_rack` VALUES (3001,5001),(3002,5002);
+-- INSERT INTO `resource_rack` VALUES (3001,5001),(3002,5002);
 /*!40000 ALTER TABLE `resource_rack` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -200,7 +196,7 @@ CREATE TABLE `resource_user` (
 
 LOCK TABLES `resource_user` WRITE;
 /*!40000 ALTER TABLE `resource_user` DISABLE KEYS */;
-INSERT INTO `resource_user` VALUES (3003,2001),(3004,2002),(3007,2001),(3005,2003),(3006,2003);
+-- INSERT INTO `resource_user` VALUES (3003,2001),(3004,2002),(3007,2001),(3005,2003),(3006,2003);
 /*!40000 ALTER TABLE `resource_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -212,9 +208,9 @@ DROP TABLE IF EXISTS `shelf`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `shelf` (
-  `SHELF_ID` bigint(11) NOT NULL,
-  `LOCATION` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`SHELF_ID`)
+  `SHELF_ID` bigint(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `LOCATION` varchar(20) DEFAULT NULL
+
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -224,7 +220,7 @@ CREATE TABLE `shelf` (
 
 LOCK TABLES `shelf` WRITE;
 /*!40000 ALTER TABLE `shelf` DISABLE KEYS */;
-INSERT INTO `shelf` VALUES (4001,'100-100'),(4002,'100-101');
+-- INSERT INTO `shelf` VALUES (4001,'100-100'),(4002,'100-101');
 /*!40000 ALTER TABLE `shelf` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -249,7 +245,7 @@ CREATE TABLE `student` (
 
 LOCK TABLES `student` WRITE;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
-INSERT INTO `student` VALUES (2001,2015001),(2002,2015002);
+-- INSERT INTO `student` VALUES (2001,2015001),(2002,2015002);
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -274,7 +270,7 @@ CREATE TABLE `teacher` (
 
 LOCK TABLES `teacher` WRITE;
 /*!40000 ALTER TABLE `teacher` DISABLE KEYS */;
-INSERT INTO `teacher` VALUES (2004,'IT');
+-- INSERT INTO `teacher` VALUES (2004,'IT');
 /*!40000 ALTER TABLE `teacher` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -286,12 +282,11 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user` (
-  `USER_ID` bigint(11) NOT NULL,
+  `USER_ID` bigint(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `FIRST_NAME` varchar(20) DEFAULT NULL,
   `LAST_NAME` varchar(20) DEFAULT NULL,
   `JOINING_DATE` date DEFAULT NULL,
   `USER_ADDRESS_ID` bigint(11) DEFAULT NULL,
-  PRIMARY KEY (`USER_ID`),
   KEY `fk_USER_ADDRESS_ID` (`USER_ADDRESS_ID`),
   CONSTRAINT `fk_USER_ADDRESS_ID` FOREIGN KEY (`USER_ADDRESS_ID`) REFERENCES `address` (`ADDRESS_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -303,7 +298,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (2001,'Satish','Kumar','2015-12-25',1001),(2002,'Priyam','Chaudhari','2015-12-09',1002),(2003,'Seema','Sinha','2015-12-11',1003),(2004,'Matthew','Kerr','2015-11-03',1004);
+-- INSERT INTO `user` VALUES (2001,'Satish','Kumar','2015-12-25',1001),(2002,'Priyam','Chaudhari','2015-12-09',1002),(2003,'Seema','Sinha','2015-12-11',1003),(2004,'Matthew','Kerr','2015-11-03',1004);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
