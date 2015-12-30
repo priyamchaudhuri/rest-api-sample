@@ -10,7 +10,7 @@ import org.tat.api.library.model.Student;
 
 public interface StudentRepository {
 
-	void saveStudent(Student user);
+	Student saveStudent(Student user);
 
 	List<Student> getStudents(int offset, int limit, List<Sort> sortConfig);
 

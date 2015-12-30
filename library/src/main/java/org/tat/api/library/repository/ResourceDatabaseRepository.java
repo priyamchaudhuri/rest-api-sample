@@ -14,8 +14,9 @@ import org.tat.api.library.model.User;
 public class ResourceDatabaseRepository extends AbstractRepository implements
 		ResourceRepository {
 
-	public void saveResource(Resource Resource) {
-		persist(Resource);
+	public Resource saveResource(Resource resource) {
+		persist(resource);
+		return resource;
 	}
 
 	@SuppressWarnings("unchecked")

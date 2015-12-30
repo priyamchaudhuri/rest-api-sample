@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -49,4 +50,13 @@ public class ResourceController {
 		User user = service.getResourceUser(resourceId);
 		return user;
 	}
+	
+	@RequestMapping(method = RequestMethod.POST, headers = "Accept=application/json", produces = { "application/json" }, consumes = { "application/json" })
+	@ResponseBody
+	public Resource createStudent(@RequestBody Resource resource,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		return service.saveResource(resource);
+	}
 }
+

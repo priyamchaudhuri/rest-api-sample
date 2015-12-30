@@ -22,8 +22,9 @@ import org.tat.api.library.model.Student;
 public class StudentDatabaseRepository extends AbstractRepository implements
 		StudentRepository {
 
-	public void saveStudent(Student student) {
+	public Student saveStudent(Student student) {
 		persist(student);
+		return student;
 	}
 
 	@SuppressWarnings("unchecked")

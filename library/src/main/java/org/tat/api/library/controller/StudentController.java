@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -98,4 +99,12 @@ public class StudentController {
 		Resource resource = service.getStudentResource(studentId,resourceId);
 		return resource;
 	}	
+	
+	@RequestMapping(method = RequestMethod.POST, headers = "Accept=application/json", produces = { "application/json" }, consumes = { "application/json" })
+	@ResponseBody
+	public Student createStudent(@RequestBody Student student,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		return service.saveStudent(student);
+	}
 }
