@@ -7,7 +7,7 @@ import org.tat.api.library.model.User;
 
 public interface ResourceRepository {
 
-	void saveResource(Resource resource);
+	Resource saveResource(Resource resource);
 
 	List<Resource> getResources();
 

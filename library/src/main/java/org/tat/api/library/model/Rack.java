@@ -33,7 +33,7 @@ public class Rack implements Owner {
 
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "RESOURCE_RACK", joinColumns = { @JoinColumn(name = "RR_RACK_ID") }, inverseJoinColumns = { @JoinColumn(name = "RR_RESOURCE_ID") })
-	@JsonManagedReference
+	@JsonManagedReference(value="resource_rack")
 	private Set<Resource> resource;
 
 	public Set<Resource> getResource() {

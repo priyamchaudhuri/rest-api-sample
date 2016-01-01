@@ -1,5 +1,6 @@
 package org.tat.api.library.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +11,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+
+
+
+
+import org.hibernate.annotations.Proxy;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -40,14 +47,14 @@ public class Resource {
 	@Column(name = "TYPE")
 	private String type;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
 	@JoinTable(name = "RESOURCE_USER", joinColumns = { @JoinColumn(name = "RU_RESOURCE_ID") }, inverseJoinColumns = { @JoinColumn(name = "RU_USER_ID") })
-	@JsonBackReference
+	@JsonBackReference(value="resource_user")
 	private User user;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
 	@JoinTable(name = "RESOURCE_RACK", joinColumns = { @JoinColumn(name = "RR_RESOURCE_ID") }, inverseJoinColumns = { @JoinColumn(name = "RR_RACK_ID") })
-	@JsonBackReference
+	@JsonBackReference(value="resource_rack")
 	private Rack rack;
 
 	public int getId() {

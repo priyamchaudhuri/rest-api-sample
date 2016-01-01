@@ -19,6 +19,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
 
@@ -38,7 +40,7 @@ public class User implements Owner {
 	@Column(name = "USER_ID")
 	private int id;
 
-	@JsonIgnore
+	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "USER_ADDRESS_ID")
 	@Cascade(CascadeType.ALL)
@@ -55,10 +57,11 @@ public class User implements Owner {
 	@JsonIgnore
 	private LocalDate joiningDate;
 	
-	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY)
+	
+	@OneToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "RESOURCE_USER", joinColumns = { @JoinColumn(name = "RU_USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "RU_RESOURCE_ID") })
-	@JsonManagedReference
+	@JsonManagedReference(value="resource_user")
+	@Cascade(CascadeType.ALL)
 	private Set<Resource> resources;
 
 	public Set<Resource> getResources() {

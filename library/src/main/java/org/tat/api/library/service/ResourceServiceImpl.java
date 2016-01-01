@@ -17,8 +17,9 @@ public class ResourceServiceImpl implements ResourceService {
 	@Autowired
 	private ResourceRepository dao;
 
-	public void saveResource(Resource Resource) {
-		dao.saveResource(Resource);
+	public Resource saveResource(Resource Resource) {
+		return dao.saveResource(Resource);
+		
 	}
 
 	public List<Resource> getResources() {
