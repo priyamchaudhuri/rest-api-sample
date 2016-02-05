@@ -1,16 +1,13 @@
 package org.tat.api.library.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.Table;
+import java.io.Serializable;
 
-@Entity
-@Table(name = "STUDENT")
-@PrimaryKeyJoinColumn(name = "STUDENT_USR_ID")
-public class Student extends User {
+public class Student extends User implements Serializable {
 
-	@Column(name = "ROLL_NO", nullable = false)
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Long rollNo;
 
 	public Long getRollNo() {
@@ -20,6 +17,5 @@ public class Student extends User {
 	public void setRollNo(Long rollNo) {
 		this.rollNo = rollNo;
 	}
-
 
 }

@@ -2,38 +2,12 @@ package org.tat.api.library.model;
 
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-
-@Entity
-@Table(name = "RACK")
-@JsonInclude(Include.NON_NULL)
 public class Rack implements Owner {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "RACK_ID")
 	private int rackId;
 
-	@Column(name = "NUMBER")
 	private int number;
 
-	@OneToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "RESOURCE_RACK", joinColumns = { @JoinColumn(name = "RR_RACK_ID") }, inverseJoinColumns = { @JoinColumn(name = "RR_RESOURCE_ID") })
-	@JsonManagedReference(value="resource_rack")
 	private Set<Resource> resource;
 
 	public Set<Resource> getResource() {

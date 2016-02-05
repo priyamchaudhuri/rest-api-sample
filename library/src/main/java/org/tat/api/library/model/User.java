@@ -1,93 +1,56 @@
 package org.tat.api.library.model;
 
+
+import java.sql.Date;
 import java.util.Set;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-import org.hibernate.annotations.Type;
-import org.joda.time.LocalDate;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-@Entity
-@Table(name = "USER")
-@Inheritance(strategy = InheritanceType.JOINED)
+@JsonAutoDetect
 @JsonInclude(Include.NON_NULL)
-public class User implements Owner {
+public abstract class User implements Owner {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "USER_ID")
-	private int id;
+	@Digits(integer = 11, fraction = 0)
+	private Long id;
 
-	
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "USER_ADDRESS_ID")
-	@Cascade(CascadeType.ALL)
-	private Address address;
-
-	@Column(name = "FIRST_NAME", nullable = false)
+	@NotEmpty
+	@Length(min = 3, max = 40, message = "400-001:The length of fname should be between 3 and 40 characters.")
 	private String fname;
 
-	@Column(name = "LAST_NAME", nullable = false)
+	@NotEmpty
+	@Length(min = 3, max = 40, message = "400-001:The length of lname should be between 3 and 40 characters.")
 	private String lname;
 
-	@Column(name = "JOINING_DATE", nullable = false)
-	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-	@JsonIgnore
-	private LocalDate joiningDate;
-	
-	
-	@OneToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "RESOURCE_USER", joinColumns = { @JoinColumn(name = "RU_USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "RU_RESOURCE_ID") })
-	@JsonManagedReference(value="resource_user")
-	@Cascade(CascadeType.ALL)
+	private String addressLine1;
+
+	private String addressLine2;
+
+	private String addressLine3;
+
+	private String city;
+
+	private String state;
+
+	@NotNull(message = "400-001:Country Should not be empty.")
+	private String country;
+
+	private Date joiningDate;
+
 	private Set<Resource> resources;
 
-	public Set<Resource> getResources() {
-		return resources;
-	}
-
-	public void setResources(Set<Resource> resources) {
-		this.resources = resources;
-	}
-
-	/*
-	 * @Override public int hashCode() { final int prime = 31; int result = 1;
-	 * result = prime * result + id; result = prime * result + ((fname == null)
-	 * ? 0 : fname.hashCode()); return result; }
-	 * 
-	 * @Override public boolean equals(Object obj) { if (this == obj) return
-	 * true; if (obj == null) return false; if (!(obj instanceof User)) return
-	 * false; User other = (User) obj; if (id != other.id) return false; if
-	 * (fname == null) { if (other.fname != null) return false; } else if
-	 * (!fname.equals(other.fname)) return false; return true; }
-	 */
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -107,20 +70,68 @@ public class User implements Owner {
 		this.lname = lname;
 	}
 
-	public LocalDate getJoiningDate() {
+	public String getAddressLine1() {
+		return addressLine1;
+	}
+
+	public void setAddressLine1(String addressLine1) {
+		this.addressLine1 = addressLine1;
+	}
+
+	public String getAddressLine2() {
+		return addressLine2;
+	}
+
+	public void setAddressLine2(String addressLine2) {
+		this.addressLine2 = addressLine2;
+	}
+
+	public String getAddressLine3() {
+		return addressLine3;
+	}
+
+	public void setAddressLine3(String addressLine3) {
+		this.addressLine3 = addressLine3;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public Date getJoiningDate() {
 		return joiningDate;
 	}
 
-	public void setJoiningDate(LocalDate joiningDate) {
+	public void setJoiningDate(Date joiningDate) {
 		this.joiningDate = joiningDate;
 	}
 
-	public Address getAddress() {
-		return address;
+	public Set<Resource> getResources() {
+		return resources;
 	}
 
-	public void setAddress(Address address) {
-		this.address = address;
+	public void setResources(Set<Resource> resources) {
+		this.resources = resources;
 	}
-
+	
 }

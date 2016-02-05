@@ -1,67 +1,32 @@
 package org.tat.api.library.model;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-
-
-
-
-import org.hibernate.annotations.Proxy;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-@Entity
-@Table(name = "RESOURCE")
 @JsonInclude(Include.NON_NULL)
 public class Resource {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "RESOURCE_ID")
-	private int id;
+	private Long id;
 
-	@Column(name = "NAME")
 	private String name;
 
-	@Column(name = "AUTHOR")
 	private String author;
 
-	@Column(name = "PUBLICATION")
 	private String publication;
 
-	@Column(name = "YEAR")
-	private int year;
+	private Integer year;
 
-	@Column(name = "TYPE")
 	private String type;
 
-	@ManyToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
-	@JoinTable(name = "RESOURCE_USER", joinColumns = { @JoinColumn(name = "RU_RESOURCE_ID") }, inverseJoinColumns = { @JoinColumn(name = "RU_USER_ID") })
-	@JsonBackReference(value="resource_user")
 	private User user;
 
-	@ManyToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
-	@JoinTable(name = "RESOURCE_RACK", joinColumns = { @JoinColumn(name = "RR_RESOURCE_ID") }, inverseJoinColumns = { @JoinColumn(name = "RR_RACK_ID") })
-	@JsonBackReference(value="resource_rack")
 	private Rack rack;
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -89,11 +54,11 @@ public class Resource {
 		this.publication = publication;
 	}
 
-	public int getYear() {
+	public Integer getYear() {
 		return year;
 	}
 
-	public void setYear(int year) {
+	public void setYear(Integer year) {
 		this.year = year;
 	}
 
