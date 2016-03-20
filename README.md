@@ -1,5 +1,5 @@
 ## REST API Sample
-This code base is intend to demonstrate some of the REST API standards, technology usage and the development practice. We have considered the the library as a sample system to come up with the APIs.
+This code base is intend to demonstrate some of the REST API standards, technology usage and the development practice. As this code base is to work purely on the technology exploration to make API development faster, we have taken a sample LIBRARY sytem to build API for. 
 
 
 ## Prerequisites
@@ -8,14 +8,14 @@ You need the following packages to be installed:
 * Tomcat 7
 * Maven 3.0.5
 * Git 2.6.4
-* MySql 5.5.47
+* Oracle
 
 ## Building from source
 After completing the prerequisites, you can follow the instructions to build the project.
 
 ### check out sources
 
-	git clone https://github.com/karasatishkumar/easylocate.git
+	git clone https://github.com/karasatishkumar/rest-api-sample.git
 
 once you clone the project change the tomcat webapp path in your parent pom.xml. So that your wars will be get copied to webapp.	
 
@@ -26,14 +26,7 @@ once you clone the project change the tomcat webapp path in your parent pom.xml.
 One successfull built the project, you can start tomcat to test..
 
 ## Contributing
-Pull requests are welcome. Expecting some android and i-os developer to contribute to this.
-
-### Database Dump
-
-		--for export
-		mysqldump -u root -p library > library.sql
-		--for import
-		source c://library.sql
+Pull requests are welcome. We have made this keeping oracle database in mind. But later this can be extended to work on any type of databases by just providing configuration. Currently it's not a proper way to specify the metadata to the API which build the query, latter this can be extened to use annotation based configuration to read metadata.
 
 ## Staying in touch
 
