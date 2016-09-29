@@ -143,7 +143,7 @@ public class LibrarianController {
 			searchRequest.put("year", year);
 		if(type != null)
 			searchRequest.put("type", type);
-		List<Resource> resources = resourceService.getLibrarianResources(librarianId,offset, limit, sorts, fields, all, searchRequest);
+		List<Resource> resources = resourceService.getLibrarianResources(librarianId,offset, limit, sorts, all, searchRequest);
 		return resources;
 	}
 

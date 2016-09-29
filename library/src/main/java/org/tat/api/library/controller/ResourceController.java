@@ -64,7 +64,7 @@ public class ResourceController {
 			searchRequest.put("year", year);
 		if(type != null)
 			searchRequest.put("type", type);
-		List<Resource> resources = service.getResources(offset, limit, sorts, fields, all, searchRequest);
+		List<Resource> resources = service.getResources(offset, limit, sorts, all, searchRequest);
 		return resources;
 	}
 

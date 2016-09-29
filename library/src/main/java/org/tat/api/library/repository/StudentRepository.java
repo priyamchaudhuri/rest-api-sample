@@ -10,11 +10,11 @@ public interface StudentRepository {
 
 	Student saveStudent(Student user) throws Exception;
 
-	List<Student> getStudents(int offset, int limit, String sorts, String fields, boolean all, Map<String, String> searchRequest) throws Exception;
+	List<Student> getStudents(int offset, int limit, String sorts, boolean all, Map<String, String> searchRequest) throws Exception;
 
 	void deleteStudent(int id);
 
-	Student getStudent(long id,String fields)throws Exception;
+	Student getStudent(long id)throws Exception;
 
 	void updateStudent(Student user);
 

@@ -6,7 +6,7 @@ public class Pagination {
 	private int limit;
 	private boolean all;
 
-	static final String PAGE_WRAPPER = "SELECT * FROM (SELECT X.*, ROWNUM as ID FROM ({entity.query}) X ) WHERE ID BETWEEN :offset AND (:offset + :limit - 1)";
+	static final String PAGE_WRAPPER = "{entity.query} LIMIT :offset,:limit";
 
 	public Pagination(int offset, int limit, boolean all) {
 		super();

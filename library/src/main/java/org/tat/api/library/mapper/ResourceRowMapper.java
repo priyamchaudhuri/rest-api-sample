@@ -15,27 +15,27 @@ public class ResourceRowMapper implements RowMapper<Resource> {
 		Resource resource = new Resource();
 
 		for (int i = 1; i <= metadata.getColumnCount(); i++) {
-			if (metadata.getColumnName(i).equalsIgnoreCase("LIBRARY_RESOURCE_RESOURCE_ID")) {
+			if (metadata.getColumnLabel(i).equalsIgnoreCase("LIBRARY_RESOURCE_RESOURCE_ID")) {
 				resource.setId(rs.getLong("LIBRARY_RESOURCE_RESOURCE_ID"));
 			}
 			
-			if (metadata.getColumnName(i).equalsIgnoreCase("LIBRARY_RESOURCE_RESOURCE_NAME")) {
+			if (metadata.getColumnLabel(i).equalsIgnoreCase("LIBRARY_RESOURCE_RESOURCE_NAME")) {
 				resource.setName(rs.getString("LIBRARY_RESOURCE_RESOURCE_NAME"));
 			}
 
-			if (metadata.getColumnName(i).equalsIgnoreCase("LIBRARY_RESOURCE_AUTHOR")) {
+			if (metadata.getColumnLabel(i).equalsIgnoreCase("LIBRARY_RESOURCE_AUTHOR")) {
 				resource.setAuthor(rs.getString("LIBRARY_RESOURCE_AUTHOR"));
 			}
 
-			if (metadata.getColumnName(i).equalsIgnoreCase("LIBRARY_RESOURCE_PUBLICATION")) {
+			if (metadata.getColumnLabel(i).equalsIgnoreCase("LIBRARY_RESOURCE_PUBLICATION")) {
 				resource.setPublication(rs.getString("LIBRARY_RESOURCE_PUBLICATION"));
 			}
 			
-			if (metadata.getColumnName(i).equalsIgnoreCase("LIBRARY_RESOURCE_RESOURCE_YEAR")) {
+			if (metadata.getColumnLabel(i).equalsIgnoreCase("LIBRARY_RESOURCE_RESOURCE_YEAR")) {
 				resource.setYear(rs.getInt("LIBRARY_RESOURCE_RESOURCE_YEAR"));
 			}
 			
-			if (metadata.getColumnName(i).equalsIgnoreCase("LIBRARY_RESOURCE_RESOURCE_TYPE")) {
+			if (metadata.getColumnLabel(i).equalsIgnoreCase("LIBRARY_RESOURCE_RESOURCE_TYPE")) {
 				resource.setType(rs.getString("LIBRARY_RESOURCE_RESOURCE_TYPE"));
 			}
 			

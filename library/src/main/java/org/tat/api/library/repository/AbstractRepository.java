@@ -20,7 +20,7 @@ public abstract class AbstractRepository {
 	private JdbcTemplate jdbcTemplate;
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-	@Autowired
+	@Autowired 
 	public void setDatasource(DataSource dataSource) {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 		this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(
@@ -36,21 +36,20 @@ public abstract class AbstractRepository {
 	}
 
 	protected Query getAllEntities(int offset, int limit, String sorts,
-			String fields, boolean all, Map<String, String> searchRequest,
+			boolean all, Map<String, String> searchRequest,
 			Map<String, Field> entityFieldMap, String baseQuery)
 					throws Exception {
 		Query query = new QueryImpl();
-		query.formQueryObject(offset, limit, sorts, fields, all, searchRequest,
+		query.formQueryObject(offset, limit, sorts, all, searchRequest,
 				entityFieldMap, baseQuery);
 		logger.debug("Final Query : " + query.getFinalQuery());
 		return query;
 	}
 
-	public String populateFields(String queryStr, String fields,
-			Map<String, Field> entityFieldMap) throws Exception {
+	public String populateFields(String queryStr,Map<String, Field> entityFieldMap) throws Exception {
 		Query query = new QueryImpl();
 		queryStr = queryStr.replace("{column.list}",
-				query.getColumnsList(fields, entityFieldMap));
+				query.getColumnsList(entityFieldMap));
 		return queryStr;
 	}
 }
