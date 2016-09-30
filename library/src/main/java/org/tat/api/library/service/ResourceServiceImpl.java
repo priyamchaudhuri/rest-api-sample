@@ -38,8 +38,8 @@ public class ResourceServiceImpl implements ResourceService {
 		return dao.getResourceOwner(id);
 	}
 	
-	public List<Resource> getStudentResources(long id,int offset, int limit, String sorts, String fields, boolean all, Map<String, String> searchRequest) throws Exception {
-		return dao.getStudentResources(id,offset, limit, sorts, fields, all, searchRequest);
+	public List<Resource> getStudentResources(long id,int offset, int limit, String sorts, boolean all, Map<String, String> searchRequest) throws Exception {
+		return dao.getStudentResources(id,offset, limit, sorts, all, searchRequest);
 	}
 	
 	public Resource getStudentResource(long studentId, long resourceId) {
@@ -47,7 +47,7 @@ public class ResourceServiceImpl implements ResourceService {
 		return dao.getStudentResource(studentId, resourceId);
 	}
 	
-	public List<Resource> getTeacherResources(long id,int offset, int limit, String sorts, String fields, boolean all, Map<String, String> searchRequest) {
+	public List<Resource> getTeacherResources(long id,int offset, int limit, String sorts,boolean all, Map<String, String> searchRequest) {
 		//return dao.getStudentResources(id,offset, limit, sorts, fields, all, searchRequest);
 		return null;
 	}
@@ -66,7 +66,7 @@ public class ResourceServiceImpl implements ResourceService {
 
 	@Override
 	public List<Resource> getLibrarianResources(long librarianId,
-			Integer offset, Integer limit, String sorts, String fields,
+			Integer offset, Integer limit, String sorts, 
 			boolean all, Map<String, String> searchRequest) {
 		// TODO Auto-generated method stub
 		return null;
@@ -74,8 +74,8 @@ public class ResourceServiceImpl implements ResourceService {
 
 	@Override
 	public List<Resource> getResources(Integer offset, Integer limit,
-			String sorts, String fields, boolean all,
+			String sorts, boolean all,
 			Map<String, String> searchRequest) throws Exception {
-		return dao.getResources(offset, limit, sorts, fields, all, searchRequest);
+		return dao.getResources(offset, limit, sorts, all, searchRequest);
 	}
 }

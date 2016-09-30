@@ -34,9 +34,9 @@ ResourceRepository {
 
 	public static String STUDENT_RESOURCES="select {column.list} from library_resource ,resource_user  where library_resource.resource_id=resource_user.ru_resource_id ";
 	public static String ALL_RESOURCE_QUERY = "select {column.list} from library_resource {filter.criteria} {sort.criteria}";
-	public static String INSERT_RESOURCE="INSERT INTO LIBRARY_RESOURCE(RESOURCE_ID,RESOURCE_NAME,AUTHOR,PUBLICATION,"
+	public static String INSERT_RESOURCE="INSERT INTO LIBRARY_RESOURCE(RESOURCE_NAME,AUTHOR,PUBLICATION,"
 			+ " RESOURCE_YEAR,RESOURCE_TYPE) "
-			+ "VALUES(RESOURCE_SEQUENCE.NEXTVAL, :resourceName, :author, :publication, :resourceYear,:resourceType)";
+			+ "VALUES(:resourceName, :author, :publication, :resourceYear,:resourceType)";
 
 	public Resource saveResource(Resource resource) {
 		SqlParameterSource userNamedParameters = new MapSqlParameterSource()
@@ -55,9 +55,9 @@ ResourceRepository {
 	}
 
 	public List<Resource> getResources(Integer offset, Integer limit,
-			String sorts, String fields, boolean all,
+			String sorts,boolean all,
 			Map<String, String> searchRequest) throws Exception {
-		Query query = getAllEntities(offset, limit, sorts, fields, all, searchRequest, resourceFieldMap, ALL_RESOURCE_QUERY);
+		Query query = getAllEntities(offset, limit, sorts, all, searchRequest, resourceFieldMap, ALL_RESOURCE_QUERY);
 		List<Resource> resources = getNamedParameterJdbcTemplate().query(query.getFinalQuery(),query.getNamedParamsMap(), new ResourceRowMapper());
 		return resources == null ? new ArrayList<Resource>() : resources;
 	}
@@ -98,11 +98,11 @@ ResourceRepository {
 		return null;
 	}
 
-	public List<Resource> getStudentResources(long id,int offset, int limit, String sorts, String fields, boolean all, Map<String, String> searchRequest) throws Exception {
+	public List<Resource> getStudentResources(long id,int offset, int limit, String sorts, boolean all, Map<String, String> searchRequest) throws Exception {
 		StringBuffer queryBuff = new StringBuffer(STUDENT_RESOURCES);
 		queryBuff.append(" AND resource_user.RU_USER_ID = :userId ");
 		queryBuff.append(" {filter.criteria} {sort.criteria}");
-		Query query = getAllEntities(offset, limit, sorts, fields, all, searchRequest, resourceFieldMap, queryBuff.toString());
+		Query query = getAllEntities(offset, limit, sorts, all, searchRequest, resourceFieldMap, queryBuff.toString());
 		query.getNamedParamsMap().put("userId", Long.valueOf(id));
 		List<Resource> resources = (List<Resource>) getNamedParameterJdbcTemplate().query(
 				query.getFinalQuery(),query.getNamedParamsMap(), new ResourceRowMapper());

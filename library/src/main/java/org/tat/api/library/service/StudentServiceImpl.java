@@ -21,16 +21,16 @@ public class StudentServiceImpl implements StudentService {
 		return dao.saveStudent(Student);
 	}
 
-	public List<Student> getStudents(int offset, int limit, String sorts, String fields, boolean all, Map<String, String> searchRequest) throws Exception {
-		return dao.getStudents(offset, limit, sorts, fields, all, searchRequest);
+	public List<Student> getStudents(int offset, int limit, String sorts, boolean all, Map<String, String> searchRequest) throws Exception {
+		return dao.getStudents(offset, limit, sorts, all, searchRequest);
 	}
 
 	public void deleteStudent(int id) {
 		dao.deleteStudent(id);
 	}
 
-	public Student getStudent(long id,String fields) throws Exception {
-		return dao.getStudent(id,fields);
+	public Student getStudent(long id) throws Exception {
+		return dao.getStudent(id);
 	}
 
 

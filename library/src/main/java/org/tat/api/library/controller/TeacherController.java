@@ -144,7 +144,7 @@ public class TeacherController {
 			searchRequest.put("year", year);
 		if(type != null)
 			searchRequest.put("type", type);
-		List<Resource> resources = resourceService.getTeacherResources(teacherId,offset, limit, sorts, fields, all, searchRequest);
+		List<Resource> resources = resourceService.getTeacherResources(teacherId,offset, limit, sorts, all, searchRequest);
 		return resources;
 	}
 

@@ -40,9 +40,9 @@ public class StudentDatabaseRepository extends AbstractRepository implements
 	
 	public static String ALL_STUDENT_QUERY = "SELECT {column.list} FROM USR,STUDENT WHERE USR.USER_ID=STUDENT.STUDENT_USR_ID {filter.criteria} {sort.criteria}";
     public static String SINGLE_STUDENT_QUERY="select {column.list} from usr,student where usr.user_id=student.student_usr_id";
-	public static String INSERT_USER="INSERT INTO USR(USER_ID,FIRST_NAME,LAST_NAME,JOINING_DATE,"
+	public static String INSERT_USER="INSERT INTO USR(FIRST_NAME,LAST_NAME,JOINING_DATE,"
 			               + " ADDRESS_LINE_1,ADDRESS_LINE_2,ADDRESS_LINE_3,CITY,STATE,COUNTRY) "
-			               + "VALUES(USR_SEQUENCE.NEXTVAL, :firstName, :lastName, :joiningDate, :addressLine1,:addressLine2,:addressLine3,:city,:state,:country)";
+			               + "VALUES(:firstName, :lastName, :joiningDate, :addressLine1,:addressLine2,:addressLine3,:city,:state,:country)";
 	public static String INSERT_STUDENT="INSERT INTO STUDENT(STUDENT_USR_ID,ROLL_NO) values(:userId,:rollNo)";
     public static String STUDENT_RESOURCES="select * from library_resource lr,resource_user ru where lr.resource_id=ru.ru_resource_id";
 	
@@ -68,15 +68,15 @@ public class StudentDatabaseRepository extends AbstractRepository implements
 		.addValue("rollNo", student.getRollNo());
 		getNamedParameterJdbcTemplate().update(INSERT_STUDENT,
 				studentNamedParameters);
-		return this.getStudent(studentId, null);
+		return this.getStudent(studentId);
 		
 	}
 
 	public List<Student> getStudents(int offset, int limit, String sorts,
-			String fields, boolean all, Map<String, String> searchRequest) throws Exception {
+			boolean all, Map<String, String> searchRequest) throws Exception {
 		long startTime = System.currentTimeMillis();
 		Query finalQueryObj = getAllEntities(offset, limit, sorts,
-				fields,all, searchRequest,studentsFieldMap,ALL_STUDENT_QUERY);
+				all, searchRequest,studentsFieldMap,ALL_STUDENT_QUERY);
 		long endTime = System.currentTimeMillis();
 		System.out.println("Time taken to form query object: " + (endTime-startTime));
 		startTime = System.currentTimeMillis();
@@ -90,9 +90,9 @@ public class StudentDatabaseRepository extends AbstractRepository implements
 	public void deleteStudent(int id) {
 	}
 
-	public Student getStudent(long id,String fields) throws Exception {
+	public Student getStudent(long id) throws Exception {
 		String getStudentQuery = SINGLE_STUDENT_QUERY + " AND usr.USER_ID = :userId";
-		getStudentQuery = populateFields(getStudentQuery, fields, studentsFieldMap);
+		getStudentQuery = populateFields(getStudentQuery, studentsFieldMap);
 		SqlParameterSource namedParameters = new MapSqlParameterSource("userId", Long.valueOf(id));
 		Student student = (Student) getNamedParameterJdbcTemplate().queryForObject(getStudentQuery, namedParameters, new StudentRowMapper());  
 		 return student;  

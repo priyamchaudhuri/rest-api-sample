@@ -96,8 +96,7 @@ public class StudentController {
 			searchRequest.put("addressLine2", addressLine2);
 		if (addressLine3 != null)
 			searchRequest.put("addressLine3", addressLine3);
-		List<Student> students = service.getStudents(offset, limit, sorts,
-				fields, all, searchRequest);
+		List<Student> students = service.getStudents(offset, limit, sorts,all, searchRequest);
 		return students;
 	}
 
@@ -115,7 +114,7 @@ public class StudentController {
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 
-		Student student = service.getStudent(studentId, fields);
+		Student student = service.getStudent(studentId);
 		String etag = MD5Util.hash(student);
 		response.setHeader("ETag", etag);
 		// etag = "121";
@@ -159,7 +158,7 @@ public class StudentController {
 		if (type != null)
 			searchRequest.put("type", type);
 		List<Resource> resources = resourceService.getStudentResources(
-				studentId, offset, limit, sorts, fields, all, searchRequest);
+				studentId, offset, limit, sorts, all, searchRequest);
 		return resources;
 	}
 

@@ -11,7 +11,7 @@ public interface ResourceService {
  
 	Resource saveResource(Resource resource);
 
-	List<Resource> getResources(Integer offset, Integer limit, String sorts, String fields, boolean all, Map<String, String> searchRequest) throws Exception;
+	List<Resource> getResources(Integer offset, Integer limit, String sorts, boolean all, Map<String, String> searchRequest) throws Exception;
 
 	void deleteResource(int id);
 
@@ -19,18 +19,18 @@ public interface ResourceService {
 
 	void updateResource(Resource Resource);
 	
-    List<Resource> getStudentResources(long id,int offset, int limit, String sorts, String fields, boolean all, Map<String, String> searchRequest) throws Exception;
+    List<Resource> getStudentResources(long id,int offset, int limit, String sorts, boolean all, Map<String, String> searchRequest) throws Exception;
     
     Resource getStudentResource(long studentId, long resourceId);
     
-    List<Resource> getTeacherResources(long id,int offset, int limit, String sorts, String fields, boolean all, Map<String, String> searchRequest);
+    List<Resource> getTeacherResources(long id,int offset, int limit, String sorts, boolean all, Map<String, String> searchRequest);
     
     Resource getTeacherResource(long teacherId, long resourceId);
 
 	Resource getLibrarianResource(long librarianId, long resourceId);
 
 	List<Resource> getLibrarianResources(long librarianId, Integer offset,
-			Integer limit, String sorts, String fields, boolean all,
+			Integer limit, String sorts, boolean all,
 			Map<String, String> searchRequest);
 
 	Owner getResourceOwner(int resourceId);

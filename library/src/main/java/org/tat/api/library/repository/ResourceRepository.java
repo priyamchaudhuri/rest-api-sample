@@ -10,7 +10,7 @@ public interface ResourceRepository {
 
 	Resource saveResource(Resource resource);
 
-	List<Resource> getResources(Integer offset, Integer limit, String sorts, String fields, boolean all, Map<String, String> searchRequest) throws Exception;
+	List<Resource> getResources(Integer offset, Integer limit, String sorts, boolean all, Map<String, String> searchRequest) throws Exception;
 
 	void deleteResource(int id);
 
@@ -18,7 +18,7 @@ public interface ResourceRepository {
 
 	void updateResource(Resource resource);
 	
-	List<Resource> getStudentResources(long id,int offset, int limit, String sorts, String fields, boolean all, Map<String, String> searchRequest) throws Exception;
+	List<Resource> getStudentResources(long id,int offset, int limit, String sorts, boolean all, Map<String, String> searchRequest) throws Exception;
 	
 	Resource getStudentResource(long studentId, long resourceId);
 

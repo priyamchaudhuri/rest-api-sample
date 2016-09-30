@@ -46,7 +46,7 @@ public class QueryImpl implements Query{
 	 * @throws InvalidFieldNameException
 	 */
 	public void formQueryObject(int offset, int limit, String sorts,
-			String selectFields, boolean all, Map<String, String> searchRequest,
+			boolean all, Map<String, String> searchRequest,
 			Map<String, Field> entityFieldMap,String baseQuery) throws InvalidSearchInputException, InvalidFieldNameException {
 		//Form sort criteria
 		baseQuery = baseQuery.replace("{sort.criteria}", formSortCriteria(sorts, entityFieldMap));
@@ -55,7 +55,7 @@ public class QueryImpl implements Query{
 		baseQuery = baseQuery.replace("{filter.criteria}", formSearchCriteria(searchRequest, entityFieldMap,baseQuery));
 
 		//Fields to select
-		baseQuery = baseQuery.replace("{column.list}", getColumnsList(selectFields,entityFieldMap));
+		baseQuery = baseQuery.replace("{column.list}", getColumnsList(entityFieldMap));
 
 		//Pagination
 		this.pagination = new Pagination(offset, limit, all);
@@ -72,7 +72,7 @@ public class QueryImpl implements Query{
 	 * @return string which replaces the column list placeholder in base query
 	 * @throws InvalidFieldNameException
 	 */
-	public String getColumnsList(String selectFields,Map<String,Field> entityFieldMap) throws InvalidFieldNameException{
+	public String getColumnsList(Map<String,Field> entityFieldMap) throws InvalidFieldNameException{
 		StringBuffer fieldsList = new StringBuffer();
 		Iterator<Field> fieldIterator = entityFieldMap.values().iterator();
 		while(fieldIterator.hasNext()){
