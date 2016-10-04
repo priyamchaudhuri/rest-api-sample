@@ -38,6 +38,7 @@
 	<modules>
 		<module>library</module>
 		<module>core</module>
+		<module>tools</module>
 	</modules>
 
 	<developers>
