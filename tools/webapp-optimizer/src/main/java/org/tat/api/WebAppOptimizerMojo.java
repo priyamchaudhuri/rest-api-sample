@@ -25,23 +25,29 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 /**
- * Echos an object string to the output screen.
- * @goal echo
- * @requiresProject false
+ * Optimize the javescript of a web project
+ * 
+ * @goal optimize
+ *
+ * @phase process-classes
  */
-public class MyMojo
+public class WebAppOptimizerMojo
     extends AbstractMojo
 {
 
-	/**
-     * Any Object to print out.
-     * @parameter expression="${echo.message}" default-value="Hello World..."
-     */
-    private Object message;
+	/*
+	 * (non-Javadoc)
+	 * @see org.apache.maven.plugin.AbstractMojo#execute()
+	 * 
+	 * Configuration Params
+	 * sourceDirectory - Source Directory where all the javascript, html and jsp files are there
+	 * destinationDirectory - Final desctination where all the files has to be copied
+	 * fileSet - list of file extensions for compression and checksum genegation
+	 */
 
     public void execute()
         throws MojoExecutionException, MojoFailureException
     {
-        getLog().info( message.toString() );
+      
     }
 }
