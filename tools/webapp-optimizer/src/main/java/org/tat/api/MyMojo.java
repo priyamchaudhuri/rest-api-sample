@@ -18,64 +18,30 @@ package org.tat.api;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
 /**
- * Goal which touches a timestamp file.
- *
- * @goal touch
- * 
- * @phase process-sources
+ * Echos an object string to the output screen.
+ * @goal echo
+ * @requiresProject false
  */
 public class MyMojo
     extends AbstractMojo
 {
-    /**
-     * Location of the file.
-     * @parameter expression="${project.build.directory}"
-     * @required
+
+	/**
+     * Any Object to print out.
+     * @parameter expression="${echo.message}" default-value="Hello World..."
      */
-    private File outputDirectory;
+    private Object message;
 
     public void execute()
-        throws MojoExecutionException
+        throws MojoExecutionException, MojoFailureException
     {
-        File f = outputDirectory;
-
-        if ( !f.exists() )
-        {
-            f.mkdirs();
-        }
-
-        File touch = new File( f, "touch.txt" );
-
-        FileWriter w = null;
-        try
-        {
-            w = new FileWriter( touch );
-
-            w.write( "touch.txt" );
-        }
-        catch ( IOException e )
-        {
-            throw new MojoExecutionException( "Error creating file " + touch, e );
-        }
-        finally
-        {
-            if ( w != null )
-            {
-                try
-                {
-                    w.close();
-                }
-                catch ( IOException e )
-                {
-                    // ignore
-                }
-            }
-        }
+        getLog().info( message.toString() );
     }
 }
