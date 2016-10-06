@@ -38,6 +38,7 @@ import org.apache.maven.plugin.MojoFailureException;
 import org.mozilla.javascript.ErrorReporter;
 import org.mozilla.javascript.EvaluatorException;
 
+import com.yahoo.platform.yui.compressor.CssCompressor;
 import com.yahoo.platform.yui.compressor.JavaScriptCompressor;
 import com.yahoo.platform.yui.compressor.YUICompressor;
 
@@ -75,8 +76,9 @@ public class WebAppOptimizerMojo extends AbstractMojo {
 	 * @parameter
 	 */
 	private FileSet fileSet;
-	
-	private static Logger logger = Logger.getLogger(WebAppOptimizerMojo.class.getName());
+
+	private static Logger logger = Logger.getLogger(WebAppOptimizerMojo.class
+			.getName());
 
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		getLog().info("sourceDirectory : " + sourceDirectory);
@@ -92,8 +94,8 @@ public class WebAppOptimizerMojo extends AbstractMojo {
 
 			getLog().info("----Input Files----");
 			for (File file : files) {
-				if (FilenameUtils.getExtension(file.getName()).equalsIgnoreCase(
-						"html")) {
+				if (FilenameUtils.getExtension(file.getName())
+						.equalsIgnoreCase("html")) {
 					getLog().info(
 							"Optimizing the html file : "
 									+ file.getCanonicalPath());
@@ -110,13 +112,14 @@ public class WebAppOptimizerMojo extends AbstractMojo {
 					getLog().info(
 							"Optimizing the css file : "
 									+ file.getCanonicalPath());
-					String content = FileUtils.readFileToString(file, "UTF-8");
-					String optContent = content.replaceAll("\\s+", " ");
 					String destFileName = file.getCanonicalPath().replace(
 							sourceDirectory.getCanonicalPath(),
 							destinationDirectory.getCanonicalPath());
-					File destFile = new File(destFileName);
-					FileUtils.writeStringToFile(destFile, optContent, "UTF-8");
+					getLog().info("Output Path : " + destFileName);
+
+					Options o = new Options(); // use defaults
+					this.compressCss(file.getCanonicalPath(),
+							destFileName, o);
 				} else {
 					getLog().info(
 							"Optimizing the css file : "
@@ -124,9 +127,11 @@ public class WebAppOptimizerMojo extends AbstractMojo {
 					String destFileName = file.getCanonicalPath().replace(
 							sourceDirectory.getCanonicalPath(),
 							destinationDirectory.getCanonicalPath());
-					
+					getLog().info("Output Path : " + destFileName);
+
 					Options o = new Options(); // use defaults
-					this.compressJavaScript(file.getCanonicalPath(), destFileName, o);
+					this.compressJavaScript(file.getCanonicalPath(),
+							destFileName, o);
 				}
 			}
 		} catch (IOException e) {
@@ -151,56 +156,87 @@ public class WebAppOptimizerMojo extends AbstractMojo {
 		if (!directory.exists()) {
 			return null;
 		}
-		return FileUtils.listFiles(directory, fileSet.getIncludes().toArray(new String[fileSet.getIncludes().size()]), true);
+		return FileUtils.listFiles(
+				directory,
+				fileSet.getIncludes().toArray(
+						new String[fileSet.getIncludes().size()]), true);
 	}
-	
-	public void compressJavaScript(String inputFilename, String outputFilename, Options o) throws IOException, EvaluatorException {
-	    Reader in = null;
-	    Writer out = null;
-	    try {
-	        in = new InputStreamReader(new FileInputStream(inputFilename), o.charset);
-	 
-	        JavaScriptCompressor compressor = new JavaScriptCompressor(in, new YuiCompressorErrorReporter());
-	        in.close(); in = null;
-	 
-	        out = new OutputStreamWriter(new FileOutputStream(outputFilename), o.charset);
-	        compressor.compress(out, o.lineBreakPos, o.munge, o.verbose, o.preserveAllSemiColons, o.disableOptimizations);
-	    } finally {
-	        IOUtils.closeQuietly(in);
-	        IOUtils.closeQuietly(out);
-	    }
+
+	public void compressJavaScript(String inputFilename, String outputFilename,
+			Options o) throws IOException, EvaluatorException {
+		Reader in = null;
+		Writer out = null;
+		try {
+			in = new InputStreamReader(FileUtils.openInputStream(new File(inputFilename)), o.charset);
+
+			JavaScriptCompressor compressor = new JavaScriptCompressor(in,
+					new YuiCompressorErrorReporter());
+			in.close();
+			in = null;
+
+			out = new OutputStreamWriter(FileUtils.openOutputStream(new File(outputFilename)),
+					o.charset);
+			compressor.compress(out, o.lineBreakPos, o.munge, o.verbose,
+					o.preserveAllSemiColons, o.disableOptimizations);
+		} finally {
+			IOUtils.closeQuietly(in);
+			IOUtils.closeQuietly(out);
+		}
 	}
-	
+
+	public void compressCss(String inputFilename, String outputFilename,
+			Options o) throws IOException, EvaluatorException {
+		Reader in = null;
+		Writer out = null;
+		try {
+			in = new InputStreamReader(FileUtils.openInputStream(new File(inputFilename)), o.charset);
+
+			CssCompressor compressor = new CssCompressor(in);
+			in.close();
+			in = null;
+
+			out = new OutputStreamWriter(FileUtils.openOutputStream(new File(outputFilename)),
+					o.charset);
+			compressor.compress(out, -1);
+		} finally {
+			IOUtils.closeQuietly(in);
+			IOUtils.closeQuietly(out);
+		}
+	}
 	private class Options {
-	    public String charset = "UTF-8";
-	    public int lineBreakPos = -1;
-	    public boolean munge = true;
-	    public boolean verbose = false;
-	    public boolean preserveAllSemiColons = false;
-	    public boolean disableOptimizations = false;
+		public String charset = "UTF-8";
+		public int lineBreakPos = -1;
+		public boolean munge = true;
+		public boolean verbose = true;
+		public boolean preserveAllSemiColons = false;
+		public boolean disableOptimizations = false;
 	}
-	
-	
+
 	private class YuiCompressorErrorReporter implements ErrorReporter {
-	    public void warning(String message, String sourceName, int line, String lineSource, int lineOffset) {
-	        if (line < 0) {
-	            logger.log(Level.WARNING, message);
-	        } else {
-	            logger.log(Level.WARNING, line + ':' + lineOffset + ':' + message);
-	        }
-	    }
-	 
-	    public void error(String message, String sourceName, int line, String lineSource, int lineOffset) {
-	        if (line < 0) {
-	            logger.log(Level.SEVERE, message);
-	        } else {
-	            logger.log(Level.SEVERE, line + ':' + lineOffset + ':' + message);
-	        }
-	    }
-	 
-	    public EvaluatorException runtimeError(String message, String sourceName, int line, String lineSource, int lineOffset) {
-	        error(message, sourceName, line, lineSource, lineOffset);
-	        return new EvaluatorException(message);
-	    }
+		public void warning(String message, String sourceName, int line,
+				String lineSource, int lineOffset) {
+			if (line < 0) {
+				logger.log(Level.WARNING, message);
+			} else {
+				logger.log(Level.WARNING, line + " : " + lineOffset + " : "
+						+ message);
+			}
+		}
+
+		public void error(String message, String sourceName, int line,
+				String lineSource, int lineOffset) {
+			if (line < 0) {
+				logger.log(Level.SEVERE, message);
+			} else {
+				logger.log(Level.SEVERE, line + " : " + lineOffset + " : "
+						+ message);
+			}
+		}
+
+		public EvaluatorException runtimeError(String message,
+				String sourceName, int line, String lineSource, int lineOffset) {
+			error(message, sourceName, line, lineSource, lineOffset);
+			return new EvaluatorException(message);
+		}
 	}
 }
