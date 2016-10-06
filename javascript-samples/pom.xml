@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.tat.api</groupId>
+	<artifactId>javascript-sample</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<name>Sample java Script App to test plugins</name>
+	<url>http://maven.apache.org</url>
+
+	<parent>
+		<groupId>org.tat.api</groupId>
+		<artifactId>rest-api</artifactId>
+		<version>1.0-SNAPSHOT</version>
+		<relativePath>../</relativePath>
+	</parent>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.tat.api</groupId>
+				<artifactId>webapp-optimizer</artifactId>
+				<version>1.0-SNAPSHOT</version>
+				<executions>
+					<execution>
+						<id>execution1</id>
+						<phase>package</phase>
+						<configuration>
+							<sourceDirectory>${session.executionRootDirectory}</sourceDirectory>
+							<destinationDirectory>${session.executionRootDirectory}/target/app</destinationDirectory>
+							<fileSet>
+								<directory>${session.executionRootDirectory}</directory>
+								<includes>
+									<include>js</include>
+									<include>css</include>
+									<include>html</include>
+								</includes>
+							</fileSet>
+						</configuration>
+						<goals>
+							<goal>optimize</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+
+</project>
