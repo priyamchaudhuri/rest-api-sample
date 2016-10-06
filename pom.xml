@@ -22,7 +22,7 @@
 		<apache.commons.pool-version>1.4</apache.commons.pool-version>
 		<commons-dbcp-version>1.2.2</commons-dbcp-version>
 		<servlet-api-version>2.5</servlet-api-version>
-		<tomcat-location>C:\softwares\apache-tomcat-7.0.67\webapps</tomcat-location>
+		<tomcat-location>G:\tools\apache-tomcat-7.0.72\webapps</tomcat-location>
 		<oracleJdbcBundleVersion>11.2.0</oracleJdbcBundleVersion>
 		<hibernate-validator-version>5.0.1.Final</hibernate-validator-version>
 		<javax.validation-version>1.1.0.Final</javax.validation-version>

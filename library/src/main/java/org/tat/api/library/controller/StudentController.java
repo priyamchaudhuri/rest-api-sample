@@ -1,11 +1,5 @@
 package org.tat.api.library.controller;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,21 +11,25 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.tat.api.core.crypto.MD5Util;
-import org.tat.api.core.filter.Embed;
+import org.tat.api.library.annotations.GetJSON;
+import org.tat.api.library.annotations.PostJSON;
 import org.tat.api.library.model.Resource;
 import org.tat.api.library.model.Student;
 import org.tat.api.library.service.ResourceService;
 import org.tat.api.library.service.StudentService;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RestController
 @Api(value = "Students API")
@@ -48,8 +46,7 @@ public class StudentController {
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Successful retrieval of students list", response = Student.class),
 			@ApiResponse(code = 400, message = "Bad Request") })
-	@RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json", produces = { "application/json" })
-	@Embed
+	@GetJSON
 	public List<Student> getStudents(
 			@RequestParam(value = "offset", defaultValue = "0") @ApiParam(required = false, value = "Start index for page", defaultValue = "0") Integer offset,
 			@RequestParam(value = "limit", defaultValue = "20") @ApiParam(required = false, value = "No.of items", defaultValue = "20") Integer limit,
@@ -101,12 +98,11 @@ public class StudentController {
 	}
 
 	@ApiOperation(httpMethod = "GET", value = "Returns student with the specified Id", notes = "Returns student detail", response = Student.class)
-	@RequestMapping(value = "/{studentId}", method = RequestMethod.GET, headers = "Accept=application/json", produces = { "application/json" })
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Successful retrieval of student details", response = Student.class),
 			@ApiResponse(code = 404, message = "Student with given id does not exist"),
 			@ApiResponse(code = 500, message = "Internal server error") })
-	@Embed
+	@GetJSON(path = "/{studentId}")
 	public ResponseEntity<Student> getStudent(
 			@PathVariable("studentId") long studentId,
 			@RequestHeader(value = "If-None-Match", required = false) String requestEtag,
@@ -126,8 +122,7 @@ public class StudentController {
 	}
 
 	@ApiOperation(httpMethod = "GET", value = "Returns list of resources", notes = "Returns resources assigned to the student with the specified Id", responseContainer = "List")
-	@RequestMapping(value = "/{studentId}/resources", method = RequestMethod.GET, headers = "Accept=application/json", produces = { "application/json" })
-	@Embed
+	@GetJSON(path = "/{studentId}/resources")
 	public List<Resource> getStudentResources(
 			@RequestParam(value = "offset", defaultValue = "0") @ApiParam(required = false, value = "Start index for page", defaultValue = "0") Integer offset,
 			@RequestParam(value = "limit", defaultValue = "20") @ApiParam(required = false, value = "No.of items", defaultValue = "20") Integer limit,
@@ -163,9 +158,10 @@ public class StudentController {
 	}
 
 	@ApiOperation(httpMethod = "GET", value = "Returns details of resource", notes = "Returns details of resource with resource id assigned to the student with the student Id", response = Resource.class)
-	@RequestMapping(value = "/{studentId}/resources/{resourceId}", method = RequestMethod.GET, headers = "Accept=application/json", produces = { "application/json" })
+	@GetJSON(path = "/{studentId}/resources/{resourceId}")
 	public Resource getStudentResource(@PathVariable long studentId,
-			@PathVariable long resourceId, HttpServletRequest request,
+			@PathVariable long resourceId,@RequestParam(value = "fields", required = false) String fields,
+			HttpServletRequest request,
 			HttpServletResponse response) {
 
 		Resource resource = resourceService.getStudentResource(studentId,
@@ -174,9 +170,7 @@ public class StudentController {
 	}
 
 	@ApiOperation(httpMethod = "POST", value = "Create New Student", response = Student.class)
-	@Transactional
-	@RequestMapping(method = RequestMethod.POST, headers = "Accept=application/json", produces = { "application/json" }, consumes = { "application/json" })
-	@ResponseBody
+	@PostJSON
 	public Student createStudent(@Valid @RequestBody Student student,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
