@@ -1,10 +1,5 @@
 package org.tat.api.library.controller;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,13 +11,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.tat.api.library.annotations.GetJSON;
+import org.tat.api.library.annotations.PostJSON;
 import org.tat.api.library.model.Owner;
 import org.tat.api.library.model.Resource;
 import org.tat.api.library.model.User;
 import org.tat.api.library.service.ResourceService;
+
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping("/resources")
@@ -35,7 +36,7 @@ public class ResourceController {
 			@ApiResponse(code = 200, message = "Successful retrieval of resource list"),
 			@ApiResponse(code = 400, message = "Bad Request")
 	})
-	@RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json", produces = { "application/json" })
+	@GetJSON
 	public List<Resource> getResource(
 			@RequestParam(value = "offset", defaultValue = "0") @ApiParam(value="Start index for page",defaultValue="0") Integer offset,
 			@RequestParam(value = "limit", defaultValue = "20") @ApiParam(value="No.of items",defaultValue="20") Integer limit,
@@ -74,7 +75,7 @@ public class ResourceController {
 			@ApiResponse(code = 404, message = "Resource with given id does not exist"),
 			@ApiResponse(code = 500, message = "Internal server error")}
 			)
-	@RequestMapping(value = "/{resourceId}", method = RequestMethod.GET, headers = "Accept=application/json", produces = { "application/json" })
+	@GetJSON(path = "/{resourceId}")
 	public Resource getResource(@PathVariable long resourceId,
 			HttpServletRequest request, HttpServletResponse response) {
 
@@ -83,7 +84,7 @@ public class ResourceController {
 	}
 
 	@ApiOperation(httpMethod="GET",value="Returns user assigned to the resource Id",notes="Returns user detail",response=User.class)
-	@RequestMapping(value = "/{resourceId}/owner", method = RequestMethod.GET, headers = "Accept=application/json", produces = { "application/json" })
+	@GetJSON(path = "/{resourceId}/owner")
 	public Owner getResourceOwner(@PathVariable int resourceId,
 			HttpServletRequest request, HttpServletResponse response) {
 
@@ -92,7 +93,7 @@ public class ResourceController {
 	}
 
 	@ApiOperation(httpMethod="POST",value="Create New Resource",response=Resource.class)
-	@RequestMapping(method = RequestMethod.POST, headers = "Accept=application/json", produces = { "application/json" }, consumes = { "application/json" })
+	@PostJSON
 	public Resource createResource(@RequestBody Resource resource,
 			HttpServletRequest request, HttpServletResponse response)
 					throws Exception {
