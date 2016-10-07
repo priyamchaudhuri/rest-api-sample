@@ -17,14 +17,16 @@ package org.tat.api;
  */
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -40,7 +42,6 @@ import org.mozilla.javascript.EvaluatorException;
 
 import com.yahoo.platform.yui.compressor.CssCompressor;
 import com.yahoo.platform.yui.compressor.JavaScriptCompressor;
-import com.yahoo.platform.yui.compressor.YUICompressor;
 
 /**
  * Optimize the javescript of a web project
@@ -76,6 +77,10 @@ public class WebAppOptimizerMojo extends AbstractMojo {
 	 * @parameter
 	 */
 	private FileSet fileSet;
+	
+	private Map<String, String> checkSumMap = new HashMap<String, String>();
+	
+	private List<File> outputFiles = new ArrayList<File>();
 
 	private static Logger logger = Logger.getLogger(WebAppOptimizerMojo.class
 			.getName());
@@ -92,7 +97,7 @@ public class WebAppOptimizerMojo extends AbstractMojo {
 
 			getLog().info("No Of files : " + files.size());
 
-			getLog().info("----Input Files----");
+			getLog().info("----Compress File----");
 			for (File file : files) {
 				if (FilenameUtils.getExtension(file.getName())
 						.equalsIgnoreCase("html")) {
@@ -105,18 +110,23 @@ public class WebAppOptimizerMojo extends AbstractMojo {
 					String destFileName = file.getCanonicalPath().replace(
 							sourceDirectory.getCanonicalPath(),
 							destinationDirectory.getCanonicalPath());
+					getLog().info("Output Path : " + destFileName);
 					File destFile = new File(destFileName);
+					outputFiles.add(destFile);
 					FileUtils.writeStringToFile(destFile, optContent, "UTF-8");
 				} else if (FilenameUtils.getExtension(file.getName())
 						.equalsIgnoreCase("css")) {
 					getLog().info(
 							"Optimizing the css file : "
 									+ file.getCanonicalPath());
+					String checkSum = this.getCheckSum(file);
+					getLog().debug("FileName : " + file.getName() + "CheckSum : " + checkSum);
+					checkSumMap.put(file.getName(), checkSum);
 					String destFileName = file.getCanonicalPath().replace(
 							sourceDirectory.getCanonicalPath(),
-							destinationDirectory.getCanonicalPath());
+							destinationDirectory.getCanonicalPath()).replace(file.getName(), checkSum);
 					getLog().info("Output Path : " + destFileName);
-
+					outputFiles.add(new File(destFileName));
 					Options o = new Options(); // use defaults
 					this.compressCss(file.getCanonicalPath(),
 							destFileName, o);
@@ -124,21 +134,46 @@ public class WebAppOptimizerMojo extends AbstractMojo {
 					getLog().info(
 							"Optimizing the css file : "
 									+ file.getCanonicalPath());
+					String checkSum = this.getCheckSum(file);
+					getLog().debug("FileName : " + file.getName() + "CheckSum : " + checkSum);
+					checkSumMap.put(file.getName(), checkSum);
 					String destFileName = file.getCanonicalPath().replace(
 							sourceDirectory.getCanonicalPath(),
-							destinationDirectory.getCanonicalPath());
+							destinationDirectory.getCanonicalPath()).replace(file.getName(), checkSum);
 					getLog().info("Output Path : " + destFileName);
-
+					outputFiles.add(new File(destFileName));
 					Options o = new Options(); // use defaults
 					this.compressJavaScript(file.getCanonicalPath(),
 							destFileName, o);
 				}
 			}
+			
+			//Finally resolve the dependency
+			this.processDependency(checkSumMap, outputFiles);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
+	}
+	
+	private void processDependency(Map<String, String> checkSumMap, List<File> outputFiles) throws IOException{
+		getLog().info("----Process Dependency----");
+		for (File file : outputFiles) {
+			getLog().info("File : " + file.getCanonicalPath());
+			String content = FileUtils.readFileToString(file, "UTF-8");
+			getLog().debug("File content before : " + content);
+			for (Map.Entry<String, String> entry : checkSumMap.entrySet()) {
+				content = content.replaceAll(entry.getKey(), entry.getValue());
+			}
+			getLog().debug("File content after : " + content);
+			FileUtils.writeStringToFile(file, content, "UTF-8");
+		}
+	}
+	
+	private String getCheckSum(File file) throws IOException{
+		Long checksum = FileUtils.checksumCRC32(file);
+		return Long.toHexString(checksum) + "." + FilenameUtils.getExtension(file.getName());
 	}
 
 	/**
