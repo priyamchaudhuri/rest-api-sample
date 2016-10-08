@@ -58,7 +58,6 @@ You can configure the plugin as below.(pom-example.xml is attached with the conf
 							</goals>
 						</execution>
 					</executions>
-	
 					<configuration>
 						<destDir>${basedir}/target/app</destDir><!--Directory to which you want to copy your optimized files-->
 						<optFileSet>
@@ -83,7 +82,6 @@ You can configure the plugin as below.(pom-example.xml is attached with the conf
 						</optFileSet>
 					</configuration>
 				</plugin>
-	
 			</plugins>
 		</build>
 	</project>
