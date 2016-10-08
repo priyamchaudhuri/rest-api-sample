@@ -39,7 +39,6 @@
 		<module>library</module>
 		<module>core</module>
 		<module>tools</module>
-		<module>javascript-samples</module>
 	</modules>
 
 	<developers>

@@ -15,6 +15,6 @@
 		<relativePath>../</relativePath>
 	</parent>
 	<modules>
-		<module>webapp-optimizer</module>
+		<module>maven-plugin-web-optmzr</module>
 	</modules>
 </project>

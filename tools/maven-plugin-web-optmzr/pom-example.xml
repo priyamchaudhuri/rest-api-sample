@@ -19,29 +19,38 @@
 		<plugins>
 			<plugin>
 				<groupId>org.tat.api</groupId>
-				<artifactId>webapp-optimizer</artifactId>
+				<artifactId>maven-plugin-web-optmzr</artifactId>
 				<version>1.0-SNAPSHOT</version>
 				<executions>
 					<execution>
-						<id>execution1</id>
-						<phase>package</phase>
-						<configuration>
-							<sourceDirectory>${session.executionRootDirectory}</sourceDirectory>
-							<destinationDirectory>${session.executionRootDirectory}/target/app</destinationDirectory>
-							<fileSet>
-								<directory>${session.executionRootDirectory}</directory>
-								<includes>
-									<include>js</include>
-									<include>css</include>
-									<include>html</include>
-								</includes>
-							</fileSet>
-						</configuration>
+						<id>packaging-execution</id>
 						<goals>
 							<goal>optimize</goal>
 						</goals>
 					</execution>
 				</executions>
+
+				<configuration>
+					<destDir>${basedir}/target/app</destDir>
+					<optFileSet>
+						<directory>${basedir}</directory>
+						<includes>
+							<include>js</include>
+							<include>css</include>
+							<include>html</include>
+						</includes>
+						<excludes>
+							<exclude>gif</exclude>
+							<exclude>png</exclude>
+							<exclude>woff2</exclude>
+							<exclude>woff</exclude>
+							<exclude>otf</exclude>
+							<exclude>eot</exclude>
+							<exclude>ttf</exclude>
+							<exclude>svg</exclude>
+						</excludes>
+					</optFileSet>
+				</configuration>
 			</plugin>
 
 		</plugins>
