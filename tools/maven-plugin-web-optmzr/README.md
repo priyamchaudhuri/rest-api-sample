@@ -1,6 +1,9 @@
 ## Web App Optimization Maven Plug-in
-maven-plugin-web-optmzr maven plug in has been created to optimize web projects for production environment. This plugin internally use Yahoo UI Compressor to compress JavaScript and CSS. HTML files are being optimised putting everything in one line.
+maven-plugin-web-optmzr maven plug-in has been created to optimize web projects for production environment. This plug-in internally use Yahoo UI Compressor to compress JavaScript and CSS. HTML files are being optimised putting everything in one line. Apart from compressing the files we rename the files(js, css) each time with a generated checksum from file content, which will certainly help you to utilize the browser cache efficiently. Every time the file content changes in your project, a new file name will be assigned. So no more problem of older JavaScripts, css with a new release.
 
+This plug-in has been created to solve generic modern JavaScript projects. This may not be applicable for older projects. 
+
+I am happy to accept feedbacks and suggestions to improve this to the next level. 
 
 ## Prerequisites
 You need the following packages to be installed:
@@ -92,7 +95,7 @@ Important things in this plug-in configurations are
 * Exclude Criteria - images, fonts etc
 
 ## Contributing
-Pull requests are welcome. We have made this keeping oracle database in mind. But later this can be extended to work on any type of databases by just providing configuration. Currently it's not a proper way to specify the metadata to the API which build the query, latter this can be extened to use annotation based configuration to read metadata.
+Pull requests are welcomed. I am planning to compress all the image files as part of the next line up items.
 
 ## Staying in touch
 
