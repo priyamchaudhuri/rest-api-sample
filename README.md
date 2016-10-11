@@ -1,7 +1,6 @@
 ## REST API Sample
 This code base is intend to demonstrate some of the REST API standards, technology usage and the development practice. As this code base is to work purely on the technology exploration to make API development faster, we have taken a sample LIBRARY sytem to build API for. 
 
-
 ## Prerequisites
 You need the following packages to be installed:
 * Java 7
