@@ -28,6 +28,7 @@ One successfull built the project, you can start tomcat to test..
 Pull requests are welcome. We have made this keeping oracle database in mind. But later this can be extended to work on any type of databases by just providing configuration. Currently it's not a proper way to specify the metadata to the API which build the query, latter this can be extened to use annotation based configuration to read metadata.
 
 ## Staying in touch
+Send me feedback at karasatishkumar@gmail.com
 
 ## License
 
