@@ -55,11 +55,6 @@
 		</dependency>
 
 		<!-- Oracle database driver -->
-		<dependency>
-			<groupId>com.oracle.bundle</groupId>
-			<artifactId>ojdbc6</artifactId>
-			<version>${oracleJdbcBundleVersion}</version>
-		</dependency>
 
 		<!-- Mysql database driver -->
 
