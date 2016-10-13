@@ -1,4 +1,4 @@
-## REST API Sample
+## REST API Sample [![Build Status](https://travis-ci.org/karasatishkumar/rest-api-sample.svg?branch=master)](https://travis-ci.org/karasatishkumar/rest-api-sample)
 This code base is intend to demonstrate some of the REST API standards, technology usage and the development practice. As this code base is to work purely on the technology exploration to make API development faster, we have taken a sample LIBRARY sytem to build API for. 
 
 ## Prerequisites
